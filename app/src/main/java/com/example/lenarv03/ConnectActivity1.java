@@ -25,7 +25,7 @@ public class ConnectActivity1 extends Activity {
         rotate = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate);
 
         Handler hd = new Handler(Looper.getMainLooper());
-        hd.postDelayed(new handler(), 5000); // 1초 후에 hd handler 실행  3000ms = 3초
+        hd.postDelayed(new handler(), 3000); // 1초 후에 hd handler 실행  3000ms = 3초
         loadingCircle.startAnimation(rotate);
 
     }
