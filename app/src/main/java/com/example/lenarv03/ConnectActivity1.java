@@ -2,6 +2,7 @@ package com.example.lenarv03;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -10,10 +11,16 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
+import com.example.lenarv03.utils.HotspotControl;
+
 public class ConnectActivity1 extends Activity {
 
     ImageView loadingCircle;
     Animation rotate;
+
+    //hotpot control
+    HotspotControl mHotspotControl = new HotspotControl();
+    public static WifiManager.LocalOnlyHotspotReservation mReservation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -25,6 +32,7 @@ public class ConnectActivity1 extends Activity {
         rotate = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate);
 
         Handler hd = new Handler(Looper.getMainLooper());
+        mHotspotControl.turnOnHotspot(ConnectActivity1.this);
         hd.postDelayed(new handler(), 3000); // 1초 후에 hd handler 실행  3000ms = 3초
         loadingCircle.startAnimation(rotate);
 

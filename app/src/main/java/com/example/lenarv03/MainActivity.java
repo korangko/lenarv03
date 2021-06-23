@@ -16,10 +16,12 @@ import android.net.NetworkRequest;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
 import android.net.wifi.WifiNetworkSpecifier;
+import android.nfc.Tag;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,11 +29,15 @@ import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.widget.ImageView;
 
+import com.example.lenarv03.utils.HotspotControl;
 import com.example.lenarv03.utils.PermissionSupport;
 import com.example.lenarv03.utils.RtspReceiver;
 import com.google.android.material.tabs.TabLayout;
 
 import org.videolan.libvlc.MediaPlayer;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -47,8 +53,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     RtspReceiver mRtspReceiver = new RtspReceiver();
     String url = "rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mov";
 
+    //hotpot control
+    HotspotControl mHotspotControl = new HotspotControl();
+    public static WifiManager.LocalOnlyHotspotReservation mReservation;
+
     //permission check
     private PermissionSupport permission;
+
+    //test
+    private static final String TAG = "JOSH";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,78 +125,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        System.out.println("josh bssid = " + currentBSSID);
     }
 
-    /** 가능성 높은 ssid pwd 가져오기**/
-    private WifiManager.LocalOnlyHotspotReservation mReservation;
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    private void turnOnHotspot() {
-        WifiManager manager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
-        try {
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                // TODO: Consider calling
-                //    ActivityCompat#requestPermissions
-                // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
-                // to handle the case where the user grants the permission. See the documentation
-                // for ActivityCompat#requestPermissions for more details.
-                return;
-            }
-            manager.startLocalOnlyHotspot(new WifiManager.LocalOnlyHotspotCallback() {
-                @Override
-                public void onStarted(WifiManager.LocalOnlyHotspotReservation reservation) {
-                    super.onStarted(reservation);
-                    mReservation = reservation;
-//                    WifiConfiguration wifiConfiguration = reservation.getWifiConfiguration();
-//                    String ssid = wifiConfiguration.SSID;
-//                    String pwd = wifiConfiguration.preSharedKey;
-
-                    String ssid = "pi";
-                    String password = "password";
-
-                    WifiNetworkSpecifier wifiNetworkSpecifier = new WifiNetworkSpecifier.Builder()
-                            .setSsid(ssid)
-                            .setWpa2Passphrase(password)
-                            .build();
-
-                    NetworkRequest networkRequest = new NetworkRequest.Builder()
-                            .addTransportType(NetworkCapabilities.TRANSPORT_WIFI)
-                            .setNetworkSpecifier(wifiNetworkSpecifier)
-                            .build();
-
-                    ConnectivityManager connectivityManager = (ConnectivityManager)getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-                    connectivityManager.requestNetwork(networkRequest, new ConnectivityManager.NetworkCallback());
-
-//                    System.out.println("josh Wifi Hotspot is on now" + ssid);
-//                    System.out.println("josh Wifi Hotspot is on now02" + pwd);
-                }
-
-                @Override
-                public void onStopped() {
-                    super.onStopped();
-                    System.out.println("josh Wifi Hotspot is onStopped");
-                }
-
-                @Override
-                public void onFailed(int reason) {
-                    super.onFailed(reason);
-                    System.out.println("josh Wifi Hotspot is onFailed");
-                }
-            }, new Handler());
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-    }
-
-    private void turnOffHotspot() {
-        if (mReservation != null) {
-            mReservation.close();
-        }
-    }
-
-
-
-    private void permissionCheck(){
-        if(Build.VERSION.SDK_INT >=23){
+    private void permissionCheck() {
+        if (Build.VERSION.SDK_INT >= 23) {
             permission = new PermissionSupport(this, this);
             if (!permission.checkPermission()) {
                 permission.requestPermission();
@@ -239,11 +182,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.mic_btn:
                 if (micOn) {
                     micBtn.setImageResource(R.drawable.ic_mic_off);
-                    turnOffHotspot();
                     micOn = false;
                 } else {
                     micBtn.setImageResource(R.drawable.ic_mic);
-                    turnOnHotspot();
                     micOn = true;
                 }
                 break;
@@ -259,8 +200,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         float dpHeight = metrics.heightPixels / density;
         float dpWidth = metrics.widthPixels / density;
         // diplay width value * resolutin bias = view
-        int viewHeight = (int)((metrics.widthPixels) / viewRatio); // 1.78 = 1920 / 1080 video resolution ratio  || 1.5 = 240 * 160
-        int viewWidth = (int)(metrics.widthPixels);
+        int viewHeight = (int) ((metrics.widthPixels) / viewRatio); // 1.78 = 1920 / 1080 video resolution ratio  || 1.5 = 240 * 160
+        int viewWidth = (int) (metrics.widthPixels);
 
         //parent layoutparam -> so it is constraint layout
         ConstraintLayout.LayoutParams params = new ConstraintLayout.LayoutParams(viewWidth, viewHeight);
