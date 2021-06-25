@@ -53,10 +53,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     RtspReceiver mRtspReceiver = new RtspReceiver();
     String url = "rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mov";
 
-    //hotpot control
-    HotspotControl mHotspotControl = new HotspotControl();
-    public static WifiManager.LocalOnlyHotspotReservation mReservation;
-
     //permission check
     private PermissionSupport permission;
 

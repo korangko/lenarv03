@@ -3,6 +3,7 @@ package com.example.lenarv03.utils;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
@@ -13,13 +14,19 @@ import android.util.Log;
 import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 
-import static com.example.lenarv03.MainActivity.mReservation;
+import com.example.lenarv03.ConnectActivity1;
+
+import java.lang.reflect.Method;
+
+import static com.example.lenarv03.ConnectActivity1.hotspotOn;
+import static com.example.lenarv03.ConnectActivity1.mReservation;
 
 public class HotspotControl {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void turnOnHotspot(Activity mActivity) {
         WifiManager manager = (WifiManager) mActivity.getSystemService(Context.WIFI_SERVICE);
+
 
         try {
             Log.d("HotspotSpec", ": " + manager);
@@ -36,14 +43,12 @@ public class HotspotControl {
                     @Override
                     public void onStarted(WifiManager.LocalOnlyHotspotReservation reservation) {
                         super.onStarted(reservation);
-                        Log.d("HotspotSpec", "Wifi Hotspot is on now");
                         mReservation = reservation;
                         WifiConfiguration mWifiConfig = mReservation.getWifiConfiguration();
 
-//                        mWifiConfig.SSID = "LENAR";
-//                        mWifiConfig.BSSID = "12345";
-//                        mWifiConfig.preSharedKey
+                        hotspotOn = true;
 
+                        Log.d("HotspotSpec", "Wifi Hotspot is on now");
                         Log.d("HotspotSpec", "SSID:" + mWifiConfig.SSID);
                         Log.d("HotspotSpec", "Password:" + mWifiConfig.preSharedKey);
 
