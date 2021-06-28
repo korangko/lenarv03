@@ -22,16 +22,16 @@ public class SplashActivity extends Activity {
         setContentView(R.layout.activity_splash);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
-        statusCheck();
-//        Handler hd = new Handler();
-//        hd.postDelayed(new splashhandler(), 3000); // 1초 후에 hd handler 실행  3000ms = 3초
+//        statusCheck();
+        Handler hd = new Handler();
+        hd.postDelayed(new splashhandler(), 2000); // 1초 후에 hd handler 실행  3000ms = 3초
 
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        statusCheck();
+//        statusCheck();
     }
 
     private class splashhandler implements Runnable {

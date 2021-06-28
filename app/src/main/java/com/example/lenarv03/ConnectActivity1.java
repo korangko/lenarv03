@@ -6,6 +6,7 @@ import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -18,8 +19,8 @@ import com.example.lenarv03.utils.HotspotControl;
 
 public class ConnectActivity1 extends Activity {
 
-    ImageView loadingCircle;
-    Animation rotate;
+    ImageView signalArc, smartPhone, checkSign;
+    Animation searchingAnim, fadeinAnim;
 
     //hotpot control
     HotspotControl mHotspotControl = new HotspotControl();
@@ -32,42 +33,41 @@ public class ConnectActivity1 extends Activity {
         setContentView(R.layout.activity_connect1);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
-        loadingCircle = findViewById(R.id.loading_circle);
-        rotate = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.rotate);
+        signalArc = findViewById(R.id.signal_arc);
+        smartPhone = findViewById(R.id.smartphone);
+        checkSign = findViewById(R.id.checksign);
+        searchingAnim = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.alpha);
+        fadeinAnim = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fadein);
+        signalArc.startAnimation(searchingAnim);
 
-//        Handler hd = new Handler(Looper.getMainLooper());
-//        hd.postDelayed(new handler(), 3000); // 1초 후에 hd handler 실행  3000ms = 3초
-
-        handler nr = new handler();
-        Thread t = new Thread(nr);
-        t.start();
-
+        Handler mHandler = new Handler();
+        mHandler.postDelayed(mMyTask1, 10000);
         mHotspotControl.turnOnHotspot(ConnectActivity1.this);
-        loadingCircle.startAnimation(rotate);
 
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == 101) {
-            String name = data.getStringExtra("name");
-            Toast.makeText(getApplicationContext(), "Message from NewActivity: " + name, Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    private class handler implements Runnable {
+    private Runnable mMyTask1 = new Runnable() {
         public void run() {
             while (!hotspotOn) {
 
             }
-            loadingCircle.clearAnimation();
+            Handler mHandler = new Handler();
+            mHandler.postDelayed(mMyTask2, 2000);
+            signalArc.clearAnimation();
+            signalArc.setVisibility(View.GONE);
+            smartPhone.setVisibility(View.GONE);
+            checkSign.startAnimation(fadeinAnim);
+            checkSign.setVisibility(View.VISIBLE);
+        }
+    };
+
+    private Runnable mMyTask2 = new Runnable() {
+        public void run() {
             startActivity(new Intent(getApplication(), MainActivity.class)); //로딩이 끝난 후, ChoiceFunction 이동
             overridePendingTransition(R.anim.fadein, R.anim.fadeout);
             ConnectActivity1.this.finish(); // 로딩페이지 Activity stack에서 제거
         }
-    }
+    };
 
     @Override
     public void onBackPressed() {
