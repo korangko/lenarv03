@@ -2,7 +2,6 @@ package com.example.lenarv03;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -11,21 +10,24 @@ import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
-import android.widget.Toast;
+import android.widget.TextView;
 
-import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
-import com.example.lenarv03.utils.HotspotControl;
+import com.example.lenarv03.utils.WifiConnect;
+import com.github.ybq.android.spinkit.SpinKitView;
+
+import static com.example.lenarv03.utils.WifiConnect.LenarConnected;
 
 public class ConnectActivity1 extends Activity {
 
-    ImageView signalArc, smartPhone, checkSign;
-    Animation searchingAnim, fadeinAnim;
+    ImageView checkSign;
+    ConstraintLayout connectionFailLayout;
+    SpinKitView loadingSignal;
+    Animation fadeinAnim;
+    TextView reconnectBtn;
 
-    //hotpot control
-    HotspotControl mHotspotControl = new HotspotControl();
-    public static WifiManager.LocalOnlyHotspotReservation mReservation;
-    static public boolean hotspotOn = false;
+    WifiConnect mWifiConnect = new WifiConnect();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,46 +35,74 @@ public class ConnectActivity1 extends Activity {
         setContentView(R.layout.activity_connect1);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
-        signalArc = findViewById(R.id.signal_arc);
-        smartPhone = findViewById(R.id.smartphone);
+        reconnectBtn = findViewById(R.id.reconnect_btn);
         checkSign = findViewById(R.id.checksign);
-        searchingAnim = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.alpha);
+        loadingSignal = findViewById(R.id.loading_signal);
+        connectionFailLayout = findViewById(R.id.connection_fail_layout);
         fadeinAnim = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fadein);
-        signalArc.startAnimation(searchingAnim);
 
-        Handler mHandler = new Handler();
-        mHandler.postDelayed(mMyTask1, 10000);
-        mHotspotControl.turnOnHotspot(ConnectActivity1.this);
+        ConnectingLenar nr = new ConnectingLenar() ;
+        Thread t = new Thread(nr) ;
+        t.start() ;
 
     }
 
-    private Runnable mMyTask1 = new Runnable() {
-        public void run() {
-            while (!hotspotOn) {
+    public void reconnect_btn_click(View view) {
+        loadingSignal.setVisibility(View.VISIBLE);
+        connectionFailLayout.setVisibility(View.GONE);
+        ConnectingLenar nr = new ConnectingLenar() ;
+        Thread t = new Thread(nr) ;
+        t.start() ;
+    }
 
+    class ConnectingLenar implements Runnable {
+        @Override
+        public void run() {
+            // connection wait till 6s and repeat 3 times
+            for (int i = 0; i < 3; i++) {
+                long startTime = System.currentTimeMillis();
+                mWifiConnect.connectLenar(ConnectActivity1.this);
+                while((System.currentTimeMillis() - startTime) < 6000) {
+                    mWifiConnect.connectionCheck(ConnectActivity1.this);
+                }
+                if(LenarConnected){
+                    //if lenar is connected, breakout of for()
+                    break;
+                }
             }
-            Handler mHandler = new Handler();
-            mHandler.postDelayed(mMyTask2, 2000);
-            signalArc.clearAnimation();
-            signalArc.setVisibility(View.GONE);
-            smartPhone.setVisibility(View.GONE);
-            checkSign.startAnimation(fadeinAnim);
-            checkSign.setVisibility(View.VISIBLE);
+            if(LenarConnected){
+                runOnUiThread(new Runnable() {
+                    public void run() {
+                        loadingSignal.setVisibility(View.GONE);
+                        checkSign.startAnimation(fadeinAnim);
+                        checkSign.setVisibility(View.VISIBLE);
+                    }
+                });
+                Handler handler = new Handler(Looper.getMainLooper());
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+//                                Intent intent = new Intent(ConnectActivity1.this, MainActivity.class); //화면 전환
+//                                startActivity(intent);
+//                                finish();
+                                startActivity(new Intent(ConnectActivity1.this, MainActivity.class)); //로딩이 끝난 후, ChoiceFunction 이동
+                                overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+                                ConnectActivity1.this.finish();
+                            }
+                        }, 3000);
+            }else{
+                runOnUiThread(new Runnable() {
+                    public void run() {
+                        loadingSignal.setVisibility(View.GONE);
+                        connectionFailLayout.setVisibility(View.VISIBLE);
+                    }
+                });
+            }
         }
-    };
-
-    private Runnable mMyTask2 = new Runnable() {
-        public void run() {
-            startActivity(new Intent(getApplication(), MainActivity.class)); //로딩이 끝난 후, ChoiceFunction 이동
-            overridePendingTransition(R.anim.fadein, R.anim.fadeout);
-            ConnectActivity1.this.finish(); // 로딩페이지 Activity stack에서 제거
-        }
-    };
+    }
 
     @Override
     public void onBackPressed() {
         //초반 플래시 화면에서 넘어갈때 뒤로가기 버튼 못누르게 함
     }
-
-
 }

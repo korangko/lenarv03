@@ -14,14 +14,10 @@ import android.util.Log;
 import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 
-import com.example.lenarv03.ConnectActivity1;
-
-import java.lang.reflect.Method;
-
-import static com.example.lenarv03.ConnectActivity1.hotspotOn;
-import static com.example.lenarv03.ConnectActivity1.mReservation;
-
 public class HotspotControl {
+
+    public static WifiManager.LocalOnlyHotspotReservation mReservation;
+    public static boolean hotspotOn = false;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void turnOnHotspot(Activity mActivity) {
