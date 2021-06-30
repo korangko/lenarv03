@@ -1,43 +1,29 @@
 package com.example.lenarv03;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.app.ActivityCompat;
 import androidx.viewpager.widget.ViewPager;
 
-import android.Manifest;
-import android.content.Context;
-import android.content.pm.PackageManager;
 import android.graphics.SurfaceTexture;
-import android.net.ConnectivityManager;
-import android.net.NetworkCapabilities;
-import android.net.NetworkRequest;
-import android.net.wifi.WifiConfiguration;
-import android.net.wifi.WifiManager;
-import android.net.wifi.WifiNetworkSpecifier;
-import android.nfc.Tag;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
-import com.example.lenarv03.utils.HotspotControl;
+import com.example.lenarv03.utils.CustomOrientationEventListener;
 import com.example.lenarv03.utils.PermissionSupport;
 import com.example.lenarv03.utils.RtspReceiver;
 import com.google.android.material.tabs.TabLayout;
 
 import org.videolan.libvlc.MediaPlayer;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -47,17 +33,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     boolean alarmOn, displayMaximized, micOn;
     private ViewPager viewPager;
     private TabLayout tabLayout;
-
     //rtsp receive variables
     public static MediaPlayer mMediaPlayer = null;
     RtspReceiver mRtspReceiver = new RtspReceiver();
     String url = "rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mov";
-
     //permission check
     private PermissionSupport permission;
-
     //test
     private static final String TAG = "JOSH";
+    //Orientation Variable
+    private CustomOrientationEventListener customOrientationEventListener;
+    final int ROTATION_O = 1;
+    final int ROTATION_90 = 2;
+    final int ROTATION_180 = 3;
+    final int ROTATION_270 = 4;
+    private int rotAngle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,11 +58,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         alarmBtn = findViewById(R.id.alarm_btn);
         alarmBtn.setOnClickListener(this);
         alarmOn = true;
-
         displayModeBtn = findViewById(R.id.displaymode_btn);
         displayModeBtn.setOnClickListener(this);
         displayMaximized = false;
-
         micBtn = findViewById(R.id.mic_btn);
         micBtn.setOnClickListener(this);
         micOn = true;
@@ -80,20 +68,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         rtspReceiveView = findViewById(R.id.rtspReceiveView);
         rtspReceiveView.setSurfaceTextureListener(mSurfaceTextureListener);
 
-        //permission
-        permissionCheck();
-
         /** tablayout **/
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
-
         tabLayout.addTab(tabLayout.newTab().setText("Capture"));
         tabLayout.addTab(tabLayout.newTab().setText("Timelapse"));
         tabLayout.addTab(tabLayout.newTab().setText("Video"));
         tabLayout.addTab(tabLayout.newTab().setText("Live"));
-
         viewPager = (ViewPager) findViewById(R.id.viewPager);
         viewPager.setAdapter(new PageAdapter(getSupportFragmentManager()));
-
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -110,7 +92,42 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
 
         });
-        monitorViewSizeChange(rtspReceiveView, 1.5);
+
+        /**permission**/
+        permissionCheck();
+        /**RTSP size setup**/
+        monitorViewSizeChange(rtspReceiveView, 1.5, true);
+        /**orientation change**/
+        customOrientationEventListener = new
+                CustomOrientationEventListener(getBaseContext()) {
+                    @Override
+                    public void onSimpleOrientationChanged(int orientation) {
+                        switch (orientation) {
+                            case ROTATION_O:
+                                rotAngle = 0;
+                                break;
+                            case ROTATION_90:
+                                rotAngle = -90;
+                                break;
+                            case ROTATION_270:
+                                rotAngle = 90;
+                                break;
+                            case ROTATION_180:
+                                rotAngle = 180;
+                                break;
+                        }
+
+                        rtspReceiveView.animate().rotation(rotAngle).setDuration(500).start();
+                        System.out.println("josh rotate angle = " + rotAngle);
+                        if (rotAngle == -90 || rotAngle == 90) {
+//                            mVideoWidth = 1920;
+//                            mVideoHeight = 1080;
+                        } else {
+//                            mVideoWidth = 1080;
+//                            mVideoHeight = 1920;
+                        }
+                    }
+                };
 
 
         /** getting wifi ssid pwd that smartphone is connected to**/
@@ -134,12 +151,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             new TextureView.SurfaceTextureListener() {
                 @Override
                 public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
-//                    mRtspReceiver.createPlayer(MainActivity.this, url, rtspReceiveView, height, width);
+                    mRtspReceiver.createPlayer(MainActivity.this, url, rtspReceiveView, height, width);
                 }
 
                 @Override
                 public void onSurfaceTextureSizeChanged(SurfaceTexture surface, int width, int height) {
-//                    mRtspReceiver.createPlayer(mainContext, url, rtspReceiveView, height, width);
+                    mRtspReceiver.createPlayer(MainActivity.this, url, rtspReceiveView, height, width);
+                    if(width>height){
+                        monitorViewSizeChange(rtspReceiveView, 1.5, false);
+                    }else{
+                        monitorViewSizeChange(rtspReceiveView, 1.5, true);
+                    }
                 }
 
                 @Override
@@ -188,7 +210,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-    void monitorViewSizeChange(TextureView textureView, double viewRatio) {
+    void monitorViewSizeChange(TextureView textureView, double viewRatio, boolean verticalLayout) {
 
         DisplayMetrics metrics = getResources().getDisplayMetrics();
         float density = getResources().getDisplayMetrics().density;
@@ -201,8 +223,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         //parent layoutparam -> so it is constraint layout
         ConstraintLayout.LayoutParams params = new ConstraintLayout.LayoutParams(viewWidth, viewHeight);
-        params.topToBottom = R.id.linearLayout2;
-        params.topMargin = 20;
+        if(verticalLayout) {
+            params.topToBottom = R.id.linearLayout2;
+            params.topMargin = 50;
+        }
         textureView.setLayoutParams(params);
     }
 

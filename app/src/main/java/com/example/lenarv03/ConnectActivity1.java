@@ -62,7 +62,7 @@ public class ConnectActivity1 extends Activity {
             for (int i = 0; i < 3; i++) {
                 long startTime = System.currentTimeMillis();
                 mWifiConnect.connectLenar(ConnectActivity1.this);
-                while((System.currentTimeMillis() - startTime) < 6000) {
+                while((System.currentTimeMillis() - startTime) < 6000 && !LenarConnected) {
                     mWifiConnect.connectionCheck(ConnectActivity1.this);
                 }
                 if(LenarConnected){
@@ -82,9 +82,6 @@ public class ConnectActivity1 extends Activity {
                         handler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
-//                                Intent intent = new Intent(ConnectActivity1.this, MainActivity.class); //화면 전환
-//                                startActivity(intent);
-//                                finish();
                                 startActivity(new Intent(ConnectActivity1.this, MainActivity.class)); //로딩이 끝난 후, ChoiceFunction 이동
                                 overridePendingTransition(R.anim.fadein, R.anim.fadeout);
                                 ConnectActivity1.this.finish();

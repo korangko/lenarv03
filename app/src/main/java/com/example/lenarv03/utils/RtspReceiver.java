@@ -34,6 +34,9 @@ public class RtspReceiver implements IVLCVout.Callback {
             options.add("--file-logging");
             options.add("--logfile=vlc-log.txt");
             options.add("--drop-late-frames");
+            /**test**/
+            options.add("--video-filter=rotate");
+            options.add("--rotate-angle=90");
             /** to enable rtsp over rtp **/
 //            options.add("--rtsp-tcp");
 //            options.add(":network-caching=150");

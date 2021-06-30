@@ -45,6 +45,7 @@ public class WifiConnect {
             String ssid = wifiInfo.getSSID();
             if (ssid.equals(String.format("\"%s\"", LenarSSID))) {
                 LenarConnected = true;
+                Log.d("wificonnection", ": " + "connection success");
             }
         }
     }

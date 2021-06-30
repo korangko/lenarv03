@@ -7,34 +7,45 @@
     tools:context=".MainActivity"
     android:background="#000000">
 
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/background"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 
     <TextureView
         android:id="@+id/rtspReceiveView"
-        android:layout_width="360dp"
-        android:layout_height="220dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
 
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tabLayout"
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:background="@color/main_theme_color"
-        app:layout_constraintBottom_toTopOf="@+id/viewPager"
-        app:tabIndicatorColor="@color/white"
-        app:tabPaddingBottom="5dp"
-        app:tabPaddingTop="5dp"
-        app:tabSelectedTextColor="@color/white"
-        app:tabTextAppearance="@style/TabTextStyle"
-        app:tabTextColor="#A8A8A8" />
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent" />
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/main_theme_color"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:tabIndicatorColor="@color/white"
+        app:tabPaddingBottom="5dp"
+        app:tabPaddingTop="5dp"
+        android:layout_marginBottom="150dp"
+        app:tabSelectedTextColor="@color/white"
+        app:tabTextAppearance="@style/TabTextStyle"
+        app:tabTextColor="#7C7C7C" />
 
     <LinearLayout
         android:id="@+id/linearLayout2"
