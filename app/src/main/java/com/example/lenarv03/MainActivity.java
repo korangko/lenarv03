@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.pm.ActivityInfo;
 import android.graphics.SurfaceTexture;
 import android.os.Build;
 import android.os.Bundle;
@@ -24,6 +25,8 @@ import com.google.android.material.tabs.TabLayout;
 
 import org.videolan.libvlc.MediaPlayer;
 
+import static com.example.lenarv03.utils.RtspReceiver.vout;
+
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -43,6 +46,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private static final String TAG = "JOSH";
     //Orientation Variable
     private CustomOrientationEventListener customOrientationEventListener;
+//    public CustomOrientationEventListener mCustomOrientationEventListener;
     final int ROTATION_O = 1;
     final int ROTATION_90 = 2;
     final int ROTATION_180 = 3;
@@ -116,13 +120,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 rotAngle = 180;
                                 break;
                         }
-
                         rtspReceiveView.animate().rotation(rotAngle).setDuration(500).start();
                         System.out.println("josh rotate angle = " + rotAngle);
                         if (rotAngle == -90 || rotAngle == 90) {
+                            monitorViewSizeChange(rtspReceiveView, 1.5, false);
 //                            mVideoWidth = 1920;
 //                            mVideoHeight = 1080;
                         } else {
+                            monitorViewSizeChange(rtspReceiveView, 1.5, true);
 //                            mVideoWidth = 1080;
 //                            mVideoHeight = 1920;
                         }
@@ -136,6 +141,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        String currentBSSID = mng.getConnectionInfo().getBSSID();
 //        System.out.println("josh ssid = " + currentSSID);
 //        System.out.println("josh bssid = " + currentBSSID);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        customOrientationEventListener.enable();
     }
 
     private void permissionCheck() {
@@ -156,12 +168,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 @Override
                 public void onSurfaceTextureSizeChanged(SurfaceTexture surface, int width, int height) {
-                    mRtspReceiver.createPlayer(MainActivity.this, url, rtspReceiveView, height, width);
-                    if(width>height){
-                        monitorViewSizeChange(rtspReceiveView, 1.5, false);
-                    }else{
-                        monitorViewSizeChange(rtspReceiveView, 1.5, true);
-                    }
                 }
 
                 @Override
@@ -212,22 +218,41 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     void monitorViewSizeChange(TextureView textureView, double viewRatio, boolean verticalLayout) {
 
+        int viewHeight;
+        int viewWidth;
+
         DisplayMetrics metrics = getResources().getDisplayMetrics();
+        /**
         float density = getResources().getDisplayMetrics().density;
         // diplay size value in dp
         float dpHeight = metrics.heightPixels / density;
         float dpWidth = metrics.widthPixels / density;
         // diplay width value * resolutin bias = view
-        int viewHeight = (int) ((metrics.widthPixels) / viewRatio); // 1.78 = 1920 / 1080 video resolution ratio  || 1.5 = 240 * 160
-        int viewWidth = (int) (metrics.widthPixels);
+         **/
+        if(verticalLayout) {
+            viewHeight = (int) ((metrics.widthPixels) / viewRatio); // 1.78 = 1920 / 1080 video resolution ratio  || 1.5 = 240 * 160
+            viewWidth = (int) (metrics.widthPixels);
+        }else{
+            viewHeight = (int) (metrics.widthPixels); // 1.78 = 1920 / 1080 video resolution ratio  || 1.5 = 240 * 160
+            viewWidth = (int) ((metrics.widthPixels) * viewRatio);
+//            viewHeight = (int) (metrics.widthPixels); // 1.78 = 1920 / 1080 video resolution ratio  || 1.5 = 240 * 160
+//            viewWidth = (int) ((metrics.heightPixels));
+        }
 
         //parent layoutparam -> so it is constraint layout
         ConstraintLayout.LayoutParams params = new ConstraintLayout.LayoutParams(viewWidth, viewHeight);
         if(verticalLayout) {
             params.topToBottom = R.id.linearLayout2;
             params.topMargin = 50;
+        }else{
+            params.topToTop = R.id.imageView5;
+            params.bottomToBottom = R.id.imageView5;
+            params.startToStart = R.id.imageView5;
+            params.endToEnd = R.id.imageView5;
         }
         textureView.setLayoutParams(params);
+        if(vout!= null) {
+            vout.setWindowSize(viewWidth, viewHeight);
+        }
     }
-
 }
