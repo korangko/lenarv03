@@ -39,6 +39,13 @@ public class WifiConnect {
     }
 
     public void connectionCheck(Activity mActivity) {
+        /** getting wifi ssid pwd that smartphone is connected to**/
+//        WifiManager mng = (WifiManager)getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+//        String currentSSID = mng.getConnectionInfo().getSSID();
+//        String currentBSSID = mng.getConnectionInfo().getBSSID();
+//        System.out.println("josh ssid = " + currentSSID);
+//        System.out.println("josh bssid = " + currentBSSID);
+
         WifiManager wifiManager = (WifiManager) mActivity.getSystemService(Context.WIFI_SERVICE);
         WifiInfo wifiInfo = wifiManager.getConnectionInfo();
         if (wifiInfo.getSupplicantState() == SupplicantState.COMPLETED) {
@@ -49,6 +56,7 @@ public class WifiConnect {
             }
         }
     }
+
 }
 
 

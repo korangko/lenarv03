@@ -10,13 +10,16 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="150dp"
-        app:layout_constraintBottom_toBottomOf="parent">
+        android:layout_height="130dp"
+        android:background="@color/main_theme_color"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
     <ImageView
         android:id="@+id/timelapse_btn2"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:src="@drawable/ic_dotcircle"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -25,8 +28,8 @@
 
     <ImageView
         android:id="@+id/timelapse_btn"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:padding="8dp"
         android:src="@drawable/ic_reddot"
         app:layout_constraintBottom_toBottomOf="parent"

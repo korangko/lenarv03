@@ -5,15 +5,15 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.pm.ActivityInfo;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.SurfaceTexture;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.TextureView;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.view.animation.Animation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -32,26 +32,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     ImageView alarmBtn, displayModeBtn, micBtn;
     TextureView rtspReceiveView;
-    Animation open, close;
     boolean alarmOn, displayMaximized, micOn;
-    private ViewPager viewPager;
-    private TabLayout tabLayout;
+    static public ViewPager viewPager;
+    static public TabLayout tabLayout;
     //rtsp receive variables
     public static MediaPlayer mMediaPlayer = null;
     RtspReceiver mRtspReceiver = new RtspReceiver();
     String url = "rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mov";
+    //loading layout
+    static public LinearLayout loadingLayout;
+    static public TextView loadingPercentage;
     //permission check
     private PermissionSupport permission;
-    //test
-    private static final String TAG = "JOSH";
     //Orientation Variable
     private CustomOrientationEventListener customOrientationEventListener;
-//    public CustomOrientationEventListener mCustomOrientationEventListener;
     final int ROTATION_O = 1;
     final int ROTATION_90 = 2;
     final int ROTATION_180 = 3;
     final int ROTATION_270 = 4;
     private int rotAngle;
+    //Reconnect Layout
+    int viewWidth, viewHeight;
+    static public ConstraintLayout reconnectLayout;
+    TextView reconnectBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +71,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         micBtn = findViewById(R.id.mic_btn);
         micBtn.setOnClickListener(this);
         micOn = true;
+        loadingLayout = findViewById(R.id.loading_layout);
+        loadingPercentage = findViewById(R.id.loading_percentage);
+        /**reconnect**/
+        reconnectLayout = findViewById(R.id.reconnect_layout);
+        reconnectBtn = findViewById(R.id.reconnect_btn);
+        reconnectBtn.setOnClickListener(this);
 
         rtspReceiveView = findViewById(R.id.rtspReceiveView);
         rtspReceiveView.setSurfaceTextureListener(mSurfaceTextureListener);
@@ -120,27 +129,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 rotAngle = 180;
                                 break;
                         }
-                        rtspReceiveView.animate().rotation(rotAngle).setDuration(500).start();
-                        System.out.println("josh rotate angle = " + rotAngle);
+                        rtspReceiveView.animate().rotation(rotAngle).setDuration(300).start();
                         if (rotAngle == -90 || rotAngle == 90) {
                             monitorViewSizeChange(rtspReceiveView, 1.5, false);
-//                            mVideoWidth = 1920;
-//                            mVideoHeight = 1080;
                         } else {
                             monitorViewSizeChange(rtspReceiveView, 1.5, true);
-//                            mVideoWidth = 1080;
-//                            mVideoHeight = 1920;
                         }
                     }
                 };
-
-
-        /** getting wifi ssid pwd that smartphone is connected to**/
-//        WifiManager mng = (WifiManager)getApplicationContext().getSystemService(Context.WIFI_SERVICE);
-//        String currentSSID = mng.getConnectionInfo().getSSID();
-//        String currentBSSID = mng.getConnectionInfo().getBSSID();
-//        System.out.println("josh ssid = " + currentSSID);
-//        System.out.println("josh bssid = " + currentBSSID);
     }
 
     @Override
@@ -163,6 +159,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             new TextureView.SurfaceTextureListener() {
                 @Override
                 public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
+                    viewWidth = width;
+                    viewHeight = height;
                     mRtspReceiver.createPlayer(MainActivity.this, url, rtspReceiveView, height, width);
                 }
 
@@ -183,31 +181,48 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.reconnect_btn:
+                reconnectLayout.setVisibility(View.GONE);
+                viewPager.setVisibility(View.VISIBLE);
+                tabLayout.setVisibility(View.VISIBLE);
+                loadingLayout.setVisibility(View.VISIBLE);
+                mRtspReceiver.createPlayer(MainActivity.this, url, rtspReceiveView, viewHeight, viewWidth);
+                break;
             case R.id.alarm_btn:
                 if (alarmOn) {
                     alarmBtn.setImageResource(R.drawable.ic_bell_off);
+                    alarmBtn.setColorFilter(Color.parseColor("#ffff0000"), PorterDuff.Mode.SRC_IN);
                     alarmOn = false;
                 } else {
                     alarmBtn.setImageResource(R.drawable.ic_bell);
+                    alarmBtn.setColorFilter(null);
                     alarmOn = true;
                 }
                 break;
             case R.id.displaymode_btn:
-                if (displayMaximized) {
-                    displayModeBtn.setImageResource(R.drawable.ic_maximize_2);
-                    displayMaximized = false;
-                } else {
-                    ViewGroup.LayoutParams pp = new ViewGroup.LayoutParams(360, 240);
+                if (!displayMaximized) {
+                    //레이아웃보이는 상태에서 클릭
                     displayModeBtn.setImageResource(R.drawable.ic_minimize_2);
+                    viewPager.setVisibility(View.GONE);
+                    tabLayout.setVisibility(View.GONE);
+                    displayModeBtn.setColorFilter(Color.parseColor("#ffff0000"), PorterDuff.Mode.SRC_IN);
                     displayMaximized = true;
+                } else {
+                    viewPager.setVisibility(View.VISIBLE);
+                    tabLayout.setVisibility(View.VISIBLE);
+                    displayModeBtn.setImageResource(R.drawable.ic_maximize_2);
+                    displayModeBtn.setColorFilter(null);
+                    displayMaximized = false;
                 }
                 break;
-
             case R.id.mic_btn:
                 if (micOn) {
+                    micBtn.setColorFilter(Color.parseColor("#ffff0000"), PorterDuff.Mode.SRC_IN);
+
                     micBtn.setImageResource(R.drawable.ic_mic_off);
                     micOn = false;
                 } else {
+                    micBtn.setColorFilter(null);
                     micBtn.setImageResource(R.drawable.ic_mic);
                     micOn = true;
                 }
@@ -223,35 +238,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         DisplayMetrics metrics = getResources().getDisplayMetrics();
         /**
-        float density = getResources().getDisplayMetrics().density;
-        // diplay size value in dp
-        float dpHeight = metrics.heightPixels / density;
-        float dpWidth = metrics.widthPixels / density;
-        // diplay width value * resolutin bias = view
+         float density = getResources().getDisplayMetrics().density;
+         // diplay size value in dp
+         float dpHeight = metrics.heightPixels / density;
+         float dpWidth = metrics.widthPixels / density;
+         // diplay width value * resolutin bias = view
          **/
-        if(verticalLayout) {
+        if (verticalLayout) {
             viewHeight = (int) ((metrics.widthPixels) / viewRatio); // 1.78 = 1920 / 1080 video resolution ratio  || 1.5 = 240 * 160
             viewWidth = (int) (metrics.widthPixels);
-        }else{
+        } else {
             viewHeight = (int) (metrics.widthPixels); // 1.78 = 1920 / 1080 video resolution ratio  || 1.5 = 240 * 160
             viewWidth = (int) ((metrics.widthPixels) * viewRatio);
-//            viewHeight = (int) (metrics.widthPixels); // 1.78 = 1920 / 1080 video resolution ratio  || 1.5 = 240 * 160
-//            viewWidth = (int) ((metrics.heightPixels));
         }
-
-        //parent layoutparam -> so it is constraint layout
+        /**parent layoutparam -> so it is constraint layout**/
         ConstraintLayout.LayoutParams params = new ConstraintLayout.LayoutParams(viewWidth, viewHeight);
-        if(verticalLayout) {
-            params.topToBottom = R.id.linearLayout2;
-            params.topMargin = 50;
-        }else{
-            params.topToTop = R.id.imageView5;
-            params.bottomToBottom = R.id.imageView5;
-            params.startToStart = R.id.imageView5;
-            params.endToEnd = R.id.imageView5;
-        }
+        params.topToTop = R.id.imageView5;
+        params.bottomToBottom = R.id.imageView5;
+        params.startToStart = R.id.imageView5;
+        params.endToEnd = R.id.imageView5;
         textureView.setLayoutParams(params);
-        if(vout!= null) {
+        if (vout != null) {
             vout.setWindowSize(viewWidth, viewHeight);
         }
     }

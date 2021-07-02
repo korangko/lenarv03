@@ -3,6 +3,7 @@ package com.example.lenarv03.utils;
 import android.content.Context;
 import android.net.Uri;
 import android.view.TextureView;
+import android.view.View;
 
 import org.videolan.libvlc.IVLCVout;
 import org.videolan.libvlc.LibVLC;
@@ -12,18 +13,25 @@ import org.videolan.libvlc.MediaPlayer;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
+import static com.example.lenarv03.MainActivity.loadingLayout;
+import static com.example.lenarv03.MainActivity.loadingPercentage;
 import static com.example.lenarv03.MainActivity.mMediaPlayer;
+import static com.example.lenarv03.MainActivity.reconnectLayout;
+import static com.example.lenarv03.MainActivity.tabLayout;
+import static com.example.lenarv03.MainActivity.viewPager;
 
 
 public class RtspReceiver implements IVLCVout.Callback {
 
     private LibVLC libvlc;
     private Media m;
+    static boolean video_load_complete;
     public static IVLCVout vout;
     private MediaPlayer.EventListener mPlayerListener = new MyPlayerListener(this);
 
     public void createPlayer(Context mContext, String url, TextureView mTextureView, int mVideoHeight, int mVideoWidth) {
         releasePlayer();
+        video_load_complete = false;
         try {
             ArrayList<String> options = new ArrayList<>();
             options.add("--aout=opensles");
@@ -35,8 +43,8 @@ public class RtspReceiver implements IVLCVout.Callback {
             options.add("--logfile=vlc-log.txt");
             options.add("--drop-late-frames");
             /**test**/
-            options.add("--video-filter=rotate");
-            options.add("--rotate-angle=90");
+//            options.add("--video-filter=rotate");
+//            options.add("--rotate-angle=90");
             /** to enable rtsp over rtp **/
 //            options.add("--rtsp-tcp");
 //            options.add(":network-caching=150");
@@ -76,8 +84,25 @@ public class RtspReceiver implements IVLCVout.Callback {
         public void onEvent(MediaPlayer.Event event) {
             RtspReceiver player = mOwner.get();
             switch (event.type) {
+                case MediaPlayer.Event.Buffering:
+                    loadingPercentage.setText((int)(event.getBuffering())+"%");
+                    if(event.getBuffering() > 99){
+                        video_load_complete = true;
+                        loadingLayout.setVisibility(View.GONE);
+                    }
+                    break;
+
                 case MediaPlayer.Event.EndReached:
+                    System.out.println("josh problem0");
+                    break;
+                case MediaPlayer.Event.Paused:
+                    System.out.println("josh problem1");
+                    break;
                 case MediaPlayer.Event.Stopped:
+                    System.out.println("josh problem2");
+                    viewPager.setVisibility(View.GONE);
+                    tabLayout.setVisibility(View.GONE);
+                    reconnectLayout.setVisibility(View.VISIBLE);
                     player.releasePlayer();
                     break;
                 default:

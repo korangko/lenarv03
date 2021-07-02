@@ -8,23 +8,27 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="150dp"
-        app:layout_constraintBottom_toBottomOf="parent">
-
-    <ImageView
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:src="@drawable/shape_circle"
+        android:layout_height="130dp"
+        android:background="@color/main_theme_color"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/shape_circle"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/record_btn"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:padding="5dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:padding="10dp"
         android:src="@drawable/ic_reddot"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -41,18 +45,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/record_time_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="00:00:00"
-        android:textColor="@color/white"
-        android:textSize="16dp"
-        android:fontFamily="@font/robotolight"
-        app:layout_constraintBottom_toTopOf="@+id/record_btn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/record_time_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/robotolight"
+            android:text="00:00:00"
+            android:textColor="@color/white"
+            android:textSize="13dp"
+            app:layout_constraintBottom_toTopOf="@+id/imageView4"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

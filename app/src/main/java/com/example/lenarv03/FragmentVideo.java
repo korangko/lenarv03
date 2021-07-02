@@ -21,7 +21,7 @@ public class FragmentVideo extends Fragment implements View.OnClickListener {
     ImageView recordBtn;
     TextView recordTimeText;
     boolean recordOn;
-    Animation open, close;
+    Animation click_btn;
     RtspRecord mRtspRecord = new RtspRecord();
 
     @Override
@@ -34,8 +34,7 @@ public class FragmentVideo extends Fragment implements View.OnClickListener {
         recordBtn.setOnClickListener(this);
         recordOn = false;
 
-        open = AnimationUtils.loadAnimation(getActivity().getBaseContext(), R.anim.open);
-        close = AnimationUtils.loadAnimation(getActivity().getBaseContext(), R.anim.close);
+        click_btn = AnimationUtils.loadAnimation(getContext().getApplicationContext(), R.anim.btn_click);
 
         return view;
     }
@@ -44,16 +43,15 @@ public class FragmentVideo extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.record_btn:
+                recordBtn.startAnimation(click_btn);
                 if(recordOn){
                     recordOn = false;
 //                    mRtspRecord.recordStop(getActivity().getBaseContext());
                     recordBtn.setImageResource(R.drawable.ic_reddot);
-                    recordBtn.startAnimation(open);
                 }else{
                     recordOn = true;
 //                    mRtspRecord.recordStart(getActivity().getBaseContext());
-                    recordBtn.setImageResource(R.drawable.ic_red_round_square);
-                    recordBtn.startAnimation(open);
+                    recordBtn.setImageResource(R.drawable.ic_redsquare);
                     Timer timer = new Timer();
                     timer.start();
                 }

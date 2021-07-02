@@ -7,18 +7,19 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="130dp"
+        android:background="@color/main_theme_color"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:background="@color/main_theme_color">
-
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
         <ImageView
             android:id="@+id/capture_btn"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:background="@drawable/shape_circle"
-            android:padding="1dp"
-            android:src="@drawable/ic_circle"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/shape_white_roundsquare"
+            android:padding="8dp"
+            android:src="@drawable/ic_reddot"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

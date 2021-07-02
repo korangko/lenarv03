@@ -18,6 +18,7 @@ public class FragmentTimelapse extends Fragment implements View.OnClickListener 
     boolean timelapseOn;
     Animation rotate;
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
