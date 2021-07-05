@@ -1,9 +1,6 @@
 package com.example.lenarv03;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.viewpager.widget.ViewPager;
-
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -18,6 +15,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.viewpager.widget.ViewPager;
+
 import com.example.lenarv03.utils.CustomOrientationEventListener;
 import com.example.lenarv03.utils.PermissionSupport;
 import com.example.lenarv03.utils.RtspReceiver;
@@ -30,7 +31,7 @@ import static com.example.lenarv03.utils.RtspReceiver.vout;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    ImageView alarmBtn, displayModeBtn, micBtn;
+    ImageView alarmBtn, displayModeBtn, micBtn, settingBtn;
     TextureView rtspReceiveView;
     boolean alarmOn, displayMaximized, micOn;
     static public ViewPager viewPager;
@@ -71,6 +72,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         micBtn = findViewById(R.id.mic_btn);
         micBtn.setOnClickListener(this);
         micOn = true;
+        settingBtn = findViewById(R.id.setting_btn);
+        settingBtn.setOnClickListener(this);
         loadingLayout = findViewById(R.id.loading_layout);
         loadingPercentage = findViewById(R.id.loading_percentage);
         /**reconnect**/
@@ -226,6 +229,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     micBtn.setImageResource(R.drawable.ic_mic);
                     micOn = true;
                 }
+                break;
+
+            case R.id.setting_btn:
+                startActivity(new Intent(MainActivity.this, StreamingSettingActivity.class)); //로딩이 끝난 후, ChoiceFunction 이동
+                overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+                MainActivity.this.finish();
                 break;
         }
     }
