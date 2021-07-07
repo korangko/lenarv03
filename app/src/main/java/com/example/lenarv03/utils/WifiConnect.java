@@ -14,7 +14,7 @@ import static android.content.Context.WIFI_SERVICE;
 
 public class WifiConnect {
 
-    public static Boolean LenarConnected = false;
+    public static Boolean LenarConnected = true;
     String LenarSSID = "KT_GiGA_5G_Wave2_6613";
 
 
