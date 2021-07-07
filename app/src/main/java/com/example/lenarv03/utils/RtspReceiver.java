@@ -93,13 +93,10 @@ public class RtspReceiver implements IVLCVout.Callback {
                     break;
 
                 case MediaPlayer.Event.EndReached:
-                    System.out.println("josh problem0");
                     break;
                 case MediaPlayer.Event.Paused:
-                    System.out.println("josh problem1");
                     break;
                 case MediaPlayer.Event.Stopped:
-                    System.out.println("josh problem2");
                     viewPager.setVisibility(View.GONE);
                     tabLayout.setVisibility(View.GONE);
                     reconnectLayout.setVisibility(View.VISIBLE);

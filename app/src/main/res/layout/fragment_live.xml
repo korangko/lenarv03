@@ -7,6 +7,7 @@
     android:background="#00FFFFFF">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
         android:layout_height="130dp"
         android:background="@color/main_theme_color"
@@ -14,32 +15,70 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-<!--    <ImageView-->
-<!--        android:id="@+id/capture_btn"-->
-<!--        android:layout_width="120dp"-->
-<!--        android:layout_height="60dp"-->
-<!--        android:background="@drawable/shape_circle"-->
-<!--        android:padding="1dp"-->
-<!--        android:src="@drawable/ic_circle"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent" />-->
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="80dp"
+            android:layout_height="65dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.3"
+            android:background="@drawable/shape_roundsquare"
+            android:orientation="vertical"
+            android:weightSum="2"
+            app:layout_constraintTop_toTopOf="@+id/constraintLayout">
 
-    <TextView
-        android:id="@+id/live_setup_btn"
-        android:layout_width="200dp"
-        android:layout_height="40dp"
-        android:background="@drawable/shape_btn"
-        android:fontFamily="@font/robotolight"
-        android:gravity="center"
-        android:text="Live Stream Setup"
-        android:textColor="@color/white"
-        android:textSize="12dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+            <ImageView
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:paddingTop="5dp"
+                android:paddingHorizontal="1dp"
+                android:src="@drawable/ic_camera"/>
+
+            <TextView
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:fontFamily="@font/robotolight"
+                android:gravity="center|top"
+                android:text="Live Stream"
+                android:textColor="@color/white"
+                android:textSize="10dp" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="80dp"
+            android:layout_height="65dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.7"
+            android:background="@drawable/shape_roundsquare"
+            android:orientation="vertical"
+            android:weightSum="2"
+            app:layout_constraintTop_toTopOf="@+id/constraintLayout">
+
+            <ImageView
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:padding="10dp"
+                android:src="@drawable/ic_live"/>
+
+            <TextView
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:fontFamily="@font/robotolight"
+                android:gravity="center|top"
+                android:text="Quick Live"
+                android:textColor="@color/white"
+                android:textSize="10dp" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
