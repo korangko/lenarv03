@@ -31,8 +31,10 @@ import static com.example.lenarv03.utils.RtspReceiver.vout;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    ImageView alarmBtn, displayModeBtn, micBtn, settingBtn;
+    LinearLayout alarmBtn, displayModeBtn, micBtn;
+    ImageView alarmBtnImg, displayModeBtnImg, micBtnImg, settingBtn;
     TextureView rtspReceiveView;
+    TextView alarmBtnTxt, displayModeBtnTxt, micBtnTxt;
     boolean alarmOn, displayMaximized, micOn;
     static public ViewPager viewPager;
     static public TabLayout tabLayout;
@@ -64,12 +66,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         alarmBtn = findViewById(R.id.alarm_btn);
+        alarmBtnImg = findViewById(R.id.alarm_btn_image);
+        alarmBtnTxt = findViewById(R.id.alarm_btn_text);
         alarmBtn.setOnClickListener(this);
         alarmOn = true;
         displayModeBtn = findViewById(R.id.displaymode_btn);
+        displayModeBtnImg = findViewById(R.id.displaymode_btn_image);
+        displayModeBtnTxt = findViewById(R.id.displaymode_btn_text);
         displayModeBtn.setOnClickListener(this);
         displayMaximized = false;
         micBtn = findViewById(R.id.mic_btn);
+        micBtnImg = findViewById(R.id.mic_btn_image);
+        micBtnTxt = findViewById(R.id.mic_btn_text);
         micBtn.setOnClickListener(this);
         micOn = true;
         settingBtn = findViewById(R.id.setting_btn);
@@ -193,40 +201,39 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.alarm_btn:
                 if (alarmOn) {
-                    alarmBtn.setImageResource(R.drawable.ic_bell_off);
-                    alarmBtn.setColorFilter(Color.parseColor("#ffff0000"), PorterDuff.Mode.SRC_IN);
+                    alarmBtnImg.setImageResource(R.drawable.ic_bell_off);
+                    alarmBtnTxt.setText("Mic : Off");
                     alarmOn = false;
                 } else {
-                    alarmBtn.setImageResource(R.drawable.ic_bell);
-                    alarmBtn.setColorFilter(null);
+                    alarmBtnImg.setImageResource(R.drawable.ic_bell);
+                    alarmBtnTxt.setText("Mic : On");
                     alarmOn = true;
                 }
                 break;
             case R.id.displaymode_btn:
                 if (!displayMaximized) {
                     //레이아웃보이는 상태에서 클릭
-                    displayModeBtn.setImageResource(R.drawable.ic_minimize_2);
+                    displayModeBtnImg.setImageResource(R.drawable.ic_minimize_2);
+                    displayModeBtnTxt.setText("Display : Min");
                     viewPager.setVisibility(View.GONE);
                     tabLayout.setVisibility(View.GONE);
-                    displayModeBtn.setColorFilter(Color.parseColor("#ffff0000"), PorterDuff.Mode.SRC_IN);
                     displayMaximized = true;
                 } else {
                     viewPager.setVisibility(View.VISIBLE);
                     tabLayout.setVisibility(View.VISIBLE);
-                    displayModeBtn.setImageResource(R.drawable.ic_maximize_2);
-                    displayModeBtn.setColorFilter(null);
+                    displayModeBtnTxt.setText("Display : Max");
+                    displayModeBtnImg.setImageResource(R.drawable.ic_maximize_2);
                     displayMaximized = false;
                 }
                 break;
             case R.id.mic_btn:
                 if (micOn) {
-                    micBtn.setColorFilter(Color.parseColor("#ffff0000"), PorterDuff.Mode.SRC_IN);
-
-                    micBtn.setImageResource(R.drawable.ic_mic_off);
+                    micBtnImg.setImageResource(R.drawable.ic_mic_off);
+                    micBtnTxt.setText("Mic : Off");
                     micOn = false;
                 } else {
-                    micBtn.setColorFilter(null);
-                    micBtn.setImageResource(R.drawable.ic_mic);
+                    micBtnImg.setImageResource(R.drawable.ic_mic);
+                    micBtnTxt.setText("Mic : On");
                     micOn = true;
                 }
                 break;
@@ -266,6 +273,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         params.bottomToBottom = R.id.imageView5;
         params.startToStart = R.id.imageView5;
         params.endToEnd = R.id.imageView5;
+        params.verticalBias = (float) 0.3;
         textureView.setLayoutParams(params);
         if (vout != null) {
             vout.setWindowSize(viewWidth, viewHeight);

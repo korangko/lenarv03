@@ -24,6 +24,7 @@
     <style name="numberPickerCustomSize">
         <item name="android:textSize">10dp</item>
         <item name="android:editTextColor">@color/white</item>
+
         <item name="android:fontFamily">@font/robotobold</item>
     </style>
 </resources>

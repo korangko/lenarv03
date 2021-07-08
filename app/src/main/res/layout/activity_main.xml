@@ -4,17 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    android:background="#000000">
-
-<!--    <ImageView-->
-<!--        android:id="@+id/imageView5"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:scaleType="centerCrop"-->
-<!--        android:src="@color/black"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent" />-->
+    android:background="#000000"
+    tools:context=".MainActivity">
 
     <ImageView
         android:id="@+id/imageView5"
@@ -32,20 +23,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="parent" />
-
-    <TextView
-        android:layout_width="100dp"
-        android:layout_height="20dp"
-        android:background="@drawable/shape_roundsquare"
-        android:fontFamily="@font/robotolight"
-        android:gravity="center"
-        android:text="240P"
-        android:textColor="@color/white"
-        android:textSize="12dp"
-        android:layout_marginTop="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
 
     <LinearLayout
         android:id="@+id/loading_layout"
@@ -70,15 +47,15 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:layout_marginTop="10dp"
             android:id="@+id/loading_percentage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/robotolight"
             android:gravity="center"
             android:text="0%"
             android:textColor="@color/white"
-            android:fontFamily="@font/robotolight"
             android:textSize="13dp" />
 
     </LinearLayout>
@@ -94,75 +71,157 @@
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_marginBottom="130dp"
         android:background="@color/main_theme_color"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView5"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:tabIndicatorColor="@color/white"
+        app:tabIndicatorHeight="0dp"
         app:tabPaddingBottom="5dp"
         app:tabPaddingTop="5dp"
-        app:tabIndicatorHeight="0dp"
         app:tabSelectedTextColor="@color/white"
         app:tabTextAppearance="@style/TabTextStyle"
         app:tabTextColor="#4E4E4E" />
 
+    <ImageView
+        android:id="@+id/setting_btn"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_weight="1"
+        android:src="@drawable/ic_setting"
+        app:layout_constraintBottom_toBottomOf="@+id/lenar_status_layout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/lenar_status_layout" />
+
+
     <LinearLayout
-        android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="40dp"
+        android:paddingHorizontal="20dp"
+        android:background="@color/main_theme_color"
+        android:layout_marginBottom="170dp"
         android:orientation="horizontal"
-        android:layout_marginTop="20dp"
-        android:layout_marginHorizontal="20dp"
-        android:weightSum="5"
-        app:layout_constraintTop_toTopOf="parent">
+        android:weightSum="4"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_editor_absoluteX="20dp">
 
-        <ImageView
-            android:id="@+id/setting_btn"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_weight="1"
-            android:padding="13dp"
-            android:src="@drawable/ic_setting" />
-
-        <ImageView
-            android:id="@+id/displaymode_btn"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_weight="1"
-            android:padding="13dp"
-            android:src="@drawable/ic_maximize_2" />
-
-        <ImageView
+        <LinearLayout
             android:id="@+id/info_btn"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:padding="13dp"
-            android:src="@drawable/ic_info" />
+            android:orientation="vertical">
 
-        <ImageView
+            <ImageView
+                android:id="@+id/info_btn_image"
+                android:layout_width="13dp"
+                android:layout_height="13dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="8dp"
+                android:src="@drawable/ic_info" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="3dp"
+                android:fontFamily="@font/robotolight"
+                android:text="240P 30FPS"
+                android:textColor="@color/white"
+                android:textSize="8dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/displaymode_btn"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/displaymode_btn_image"
+                android:layout_width="13dp"
+                android:layout_height="13dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="8dp"
+                android:src="@drawable/ic_maximize_2" />
+
+            <TextView
+                android:id="@+id/displaymode_btn_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="3dp"
+                android:fontFamily="@font/robotolight"
+                android:text="Display : Max"
+                android:textColor="@color/white"
+                android:textSize="8dp" />
+        </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/alarm_btn"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:padding="13dp"
-            android:src="@drawable/ic_bell" />
+            android:orientation="vertical">
 
-        <ImageView
+            <ImageView
+                android:id="@+id/alarm_btn_image"
+                android:layout_width="13dp"
+                android:layout_height="13dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="8dp"
+                android:src="@drawable/ic_bell" />
+
+            <TextView
+                android:id="@+id/alarm_btn_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="3dp"
+                android:fontFamily="@font/robotolight"
+                android:text="Alarm : On"
+                android:textColor="@color/white"
+                android:textSize="8dp" />
+        </LinearLayout>
+
+
+        <LinearLayout
             android:id="@+id/mic_btn"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:padding="13dp"
-            android:src="@drawable/ic_mic" />
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/mic_btn_image"
+                android:layout_width="13dp"
+                android:layout_height="13dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="8dp"
+                android:src="@drawable/ic_mic" />
+
+            <TextView
+                android:id="@+id/mic_btn_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="3dp"
+                android:fontFamily="@font/robotolight"
+                android:text="Mic : On"
+                android:textColor="@color/white"
+                android:textSize="8dp" />
+        </LinearLayout>
+
     </LinearLayout>
 
+
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:visibility="gone"
         android:id="@+id/reconnect_layout"
         android:layout_width="match_parent"
         android:layout_height="170dp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent">
 
         <TextView
@@ -170,10 +229,10 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/robotolight"
             android:gravity="center"
+            android:lineSpacingExtra="10dp"
             android:text="Connection lost\nClick reconnect button to connect device"
             android:textColor="@color/white"
             android:textSize="10dp"
-            android:lineSpacingExtra ="10dp"
             app:layout_constraintBottom_toTopOf="@+id/reconnect_btn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -195,8 +254,56 @@
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <LinearLayout
+        android:id="@+id/lenar_status_layout"
+        android:layout_width="200dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="20dp"
+        android:weightSum="4"
+        android:background="@drawable/shape_roundsquare"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
+        <ImageView
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:padding="9dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center|end"
+            android:src="@drawable/ic_signal2"/>
 
+        <TextView
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center|start"
+            android:fontFamily="@font/robotobold"
+            android:text="60ms"
+            android:textColor="@color/white"
+            android:textSize="10dp" />
+
+        <ImageView
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:rotation="90"
+            android:padding="5dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_battery"/>
+        <TextView
+            android:gravity="center|start"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:fontFamily="@font/robotobold"
+            android:text="97%"
+            android:textColor="@color/white"
+            android:textSize="10dp" />
+
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
