@@ -29,6 +29,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        app:layout_constraintVertical_bias="0.3"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/imageView5"
         app:layout_constraintStart_toStartOf="parent"
@@ -36,7 +37,7 @@
 
         <com.github.ybq.android.spinkit.SpinKitView
             android:id="@+id/loading_signal"
-            style="@style/SpinKitView.CubeGrid"
+            style="@style/SpinKitView.Circle"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_gravity="center"
@@ -65,7 +66,8 @@
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_editor_absoluteX="0dp" />
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout"
@@ -79,6 +81,7 @@
         app:tabIndicatorHeight="0dp"
         app:tabPaddingBottom="5dp"
         app:tabPaddingTop="5dp"
+        app:tabGravity="center"
         app:tabSelectedTextColor="@color/white"
         app:tabTextAppearance="@style/TabTextStyle"
         app:tabTextColor="#4E4E4E" />
@@ -256,7 +259,7 @@
 
     <LinearLayout
         android:id="@+id/lenar_status_layout"
-        android:layout_width="200dp"
+        android:layout_width="160dp"
         android:layout_height="30dp"
         android:layout_marginTop="20dp"
         android:weightSum="4"
