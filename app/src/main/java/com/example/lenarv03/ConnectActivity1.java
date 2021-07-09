@@ -82,7 +82,7 @@ public class ConnectActivity1 extends Activity {
                         handler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                startActivity(new Intent(ConnectActivity1.this, MainActivity.class)); //로딩이 끝난 후, ChoiceFunction 이동
+                                startActivity(new Intent(ConnectActivity1.this, ConnectActivity2.class)); //로딩이 끝난 후, ChoiceFunction 이동
                                 overridePendingTransition(R.anim.fadein, R.anim.fadeout);
                                 ConnectActivity1.this.finish();
                             }
