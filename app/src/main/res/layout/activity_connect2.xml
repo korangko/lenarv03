@@ -29,25 +29,19 @@
     <LinearLayout
         android:id="@+id/main_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="200dp"
+        android:layout_height="250dp"
+        android:orientation="horizontal"
         android:weightSum="2"
-        android:layout_marginBottom="200dp"
-        android:orientation="horizontal">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_weight="1"
             android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:layout_margin="15dp"
-            android:layout_height="match_parent">
-
-            <ImageView
-                android:id="@+id/imageView10"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:alpha="0.5"
-                android:scaleType="centerCrop"
-                android:src="@drawable/wallpaper3" />
+            android:layout_weight="1"
+            android:background="@drawable/shape_foggy_square"
+            android:onClick="video_btn_click">
 
             <TextView
                 android:id="@+id/textView3"
@@ -56,21 +50,22 @@
                 android:fontFamily="@font/robotobold"
                 android:text="VIDEO"
                 android:textColor="@color/white"
-                android:textSize="35dp"
+                android:textSize="30dp"
+                app:layout_constraintVertical_bias="0.3"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/imageView10"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:layout_marginTop="10dp"
                 android:id="@+id/textView4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:fontFamily="@font/robotolight"
-                android:gravity="end"
-                android:text="Record\nexotic experiences\nwith your point of view"
-                android:lineSpacingExtra="5dp"
+                android:gravity="center"
+                android:lineSpacingExtra="10dp"
+                android:text="Capture\nTimelapse"
                 android:textColor="@color/white"
                 android:textSize="12dp"
                 app:layout_constraintEnd_toEndOf="@+id/textView3"
@@ -78,59 +73,69 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
 
-
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_weight="1"
             android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:layout_margin="15dp"
-            android:layout_height="match_parent">
+            android:layout_weight="1"
+            android:background="@drawable/shape_foggy_square">
 
-            <ImageView
-                android:id="@+id/imageView6"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:alpha="0.2"
-                android:scaleType="centerCrop"
-                android:src="@drawable/wallpaper4" />
-
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/ic_reddot"
-                android:layout_marginEnd="7dp"
-                app:layout_constraintBottom_toBottomOf="@+id/textView5"
-                app:layout_constraintEnd_toStartOf="@+id/textView5"
-                app:layout_constraintTop_toTopOf="@+id/textView5" />
-
-            <TextView
-                android:id="@+id/textView5"
+            <LinearLayout
+                android:id="@+id/linearLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/robotobold"
-                android:text="LIVE"
-                android:textColor="@color/white"
-                android:textSize="35dp"
+                app:layout_constraintVertical_bias="0.3"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/imageView6"
+                    android:layout_width="0dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:src="@drawable/ic_reddot"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView5"
+                    app:layout_constraintEnd_toStartOf="@+id/textView5"
+                    app:layout_constraintTop_toTopOf="@+id/textView5" />
+
+                <TextView
+                    android:id="@+id/textView5"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="5"
+                    android:fontFamily="@font/robotobold"
+                    android:gravity="center"
+                    android:text="LIVE"
+                    android:textColor="@color/white"
+                    android:textSize="30dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </LinearLayout>
+
 
             <TextView
                 android:id="@+id/textView6"
-                android:layout_marginTop="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:fontFamily="@font/robotolight"
-                android:gravity="start"
-                android:text="Share\nImportant moments\nwith others"
-                android:lineSpacingExtra="5dp"
+                android:gravity="center"
+                android:lineSpacingExtra="10dp"
+                android:text="Youtube\nFaceBook Live\nTwitch"
                 android:textColor="@color/white"
                 android:textSize="12dp"
-                app:layout_constraintEnd_toEndOf="@+id/textView5"
-                app:layout_constraintStart_toStartOf="@+id/textView5"
-                app:layout_constraintTop_toBottomOf="@+id/textView5" />
+                app:layout_constraintEnd_toEndOf="@+id/linearLayout"
+                app:layout_constraintStart_toStartOf="@+id/linearLayout"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>

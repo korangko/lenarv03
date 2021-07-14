@@ -19,4 +19,10 @@ public class ConnectActivity2 extends Activity {
         overridePendingTransition(R.anim.fadein, R.anim.fadeout);
         ConnectActivity2.this.finish();
     }
+
+    public void video_btn_click(View view) {
+        startActivity(new Intent(ConnectActivity2.this, MainActivity.class)); //로딩이 끝난 후, ChoiceFunction 이동
+        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+        ConnectActivity2.this.finish();
+    }
 }

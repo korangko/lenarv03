@@ -29,7 +29,8 @@ public class RtmpSender {
         /**broadcast from phone saving **/
 //        String[] ffmpegCommand = new String[]{"-i", fileSavePath,
 //                "-tune", "zerolatency", "-ar", "44100", "-vcodec", "libx264", "-pix_fmt",
-//                "yuv420p", "-threads", "6", "-c:v", "copy", "-f", "flv", "-flvflags", "no_duration_filesize", streamUrl};
+//                "yuv420p", "-threads", "6", "-c:v", "copy", "-f", "flv", "-flvflags", "no_durat
+//                ion_filesize", streamUrl};
 
 
         broadcastId = FFmpeg.executeAsync(ffmpegCommand, new ExecuteCallback() {
