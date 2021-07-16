@@ -2,8 +2,6 @@ package com.example.lenarv03;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.graphics.SurfaceTexture;
 import android.os.Build;
 import android.os.Bundle;
@@ -17,6 +15,9 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.lenarv03.utils.CustomOrientationEventListener;
@@ -31,13 +32,14 @@ import static com.example.lenarv03.utils.RtspReceiver.vout;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    LinearLayout alarmBtn, displayModeBtn, micBtn;
-    ImageView alarmBtnImg, displayModeBtnImg, micBtnImg, settingBtn;
+    ImageView settingBtn, layoutMiniBtn;
     TextureView rtspReceiveView;
-    TextView alarmBtnTxt, displayModeBtnTxt, micBtnTxt;
-    boolean alarmOn, displayMaximized, micOn;
+    boolean displayMaximized;
     static public ViewPager viewPager;
     static public TabLayout tabLayout;
+    //mini setting Layout
+    FragmentManager manager;
+    Fragment miniSettingLayout;
     //rtsp receive variables
     public static MediaPlayer mMediaPlayer = null;
     RtspReceiver mRtspReceiver = new RtspReceiver();
@@ -65,30 +67,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
-        alarmBtn = findViewById(R.id.alarm_btn);
-        alarmBtnImg = findViewById(R.id.alarm_btn_image);
-        alarmBtnTxt = findViewById(R.id.alarm_btn_text);
-        alarmBtn.setOnClickListener(this);
-        alarmOn = true;
-        displayModeBtn = findViewById(R.id.displaymode_btn);
-        displayModeBtnImg = findViewById(R.id.displaymode_btn_image);
-        displayModeBtnTxt = findViewById(R.id.displaymode_btn_text);
-        displayModeBtn.setOnClickListener(this);
-        displayMaximized = false;
-        micBtn = findViewById(R.id.mic_btn);
-        micBtnImg = findViewById(R.id.mic_btn_image);
-        micBtnTxt = findViewById(R.id.mic_btn_text);
-        micBtn.setOnClickListener(this);
-        micOn = true;
+        displayMaximized = true;
         settingBtn = findViewById(R.id.setting_btn);
         settingBtn.setOnClickListener(this);
         loadingLayout = findViewById(R.id.loading_layout);
         loadingPercentage = findViewById(R.id.loading_percentage);
+        layoutMiniBtn = findViewById(R.id.layout_mini_btn);
+        layoutMiniBtn.setOnClickListener(this);
+
+        /**fragment variable**/
+        manager = getSupportFragmentManager();
+        miniSettingLayout = manager.findFragmentById(R.id.mini_setting_layout);
+
         /**reconnect**/
         reconnectLayout = findViewById(R.id.reconnect_layout);
         reconnectBtn = findViewById(R.id.reconnect_btn);
         reconnectBtn.setOnClickListener(this);
-
         rtspReceiveView = findViewById(R.id.rtspReceiveView);
         rtspReceiveView.setSurfaceTextureListener(mSurfaceTextureListener);
 
@@ -198,45 +192,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 loadingLayout.setVisibility(View.VISIBLE);
                 mRtspReceiver.createPlayer(MainActivity.this, url, rtspReceiveView, viewHeight, viewWidth);
                 break;
-            case R.id.alarm_btn:
-                if (alarmOn) {
-                    alarmBtnImg.setImageResource(R.drawable.ic_bell_off);
-                    alarmBtnTxt.setText("Mic : Off");
-                    alarmOn = false;
-                } else {
-                    alarmBtnImg.setImageResource(R.drawable.ic_bell);
-                    alarmBtnTxt.setText("Mic : On");
-                    alarmOn = true;
-                }
-                break;
-            case R.id.displaymode_btn:
-                if (!displayMaximized) {
+            case R.id.layout_mini_btn:
+                if (displayMaximized) {
                     //레이아웃보이는 상태에서 클릭
-                    displayModeBtnImg.setImageResource(R.drawable.ic_minimize_2);
-                    displayModeBtnTxt.setText("Display : Min");
+                    layoutMiniBtn.setImageResource(R.drawable.ic_maximize_2);
                     viewPager.setVisibility(View.GONE);
                     tabLayout.setVisibility(View.GONE);
-                    displayMaximized = true;
+                    FragmentTransaction ft = manager.beginTransaction();
+                    ft.hide(miniSettingLayout);
+                    ft.commit();
+                    displayMaximized = false;
                 } else {
+                    layoutMiniBtn.setImageResource(R.drawable.ic_minimize_2);
                     viewPager.setVisibility(View.VISIBLE);
                     tabLayout.setVisibility(View.VISIBLE);
-                    displayModeBtnTxt.setText("Display : Max");
-                    displayModeBtnImg.setImageResource(R.drawable.ic_maximize_2);
-                    displayMaximized = false;
+                    FragmentTransaction ft = manager.beginTransaction();
+                    ft.show(miniSettingLayout);
+                    ft.commit();
+                    displayMaximized = true;
                 }
                 break;
-            case R.id.mic_btn:
-                if (micOn) {
-                    micBtnImg.setImageResource(R.drawable.ic_mic_off);
-                    micBtnTxt.setText("Mic : Off");
-                    micOn = false;
-                } else {
-                    micBtnImg.setImageResource(R.drawable.ic_mic);
-                    micBtnTxt.setText("Mic : On");
-                    micOn = true;
-                }
-                break;
-
             case R.id.setting_btn:
                 startActivity(new Intent(MainActivity.this, StreamingSettingActivity.class)); //로딩이 끝난 후, ChoiceFunction 이동
                 overridePendingTransition(R.anim.fadein, R.anim.fadeout);
@@ -247,10 +222,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     void monitorViewSizeChange(TextureView textureView, double viewRatio, boolean verticalLayout) {
-
         int viewHeight;
         int viewWidth;
-
         DisplayMetrics metrics = getResources().getDisplayMetrics();
         /**
          float density = getResources().getDisplayMetrics().density;
