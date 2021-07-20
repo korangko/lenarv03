@@ -19,7 +19,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@drawable/shape_white_roundsquare"
-            android:padding="8dp"
+            android:padding="1dp"
             android:src="@drawable/ic_reddot"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

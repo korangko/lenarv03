@@ -88,36 +88,59 @@
 
     <ImageView
         android:id="@+id/setting_btn"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_weight="1"
+        android:padding="5dp"
         android:src="@drawable/ic_setting"
-        app:layout_constraintBottom_toBottomOf="@+id/lenar_status_layout"
+        app:layout_constraintBottom_toBottomOf="@+id/lenar_info_layout"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/lenar_status_layout"
-        app:layout_constraintTop_toTopOf="@+id/lenar_status_layout" />
+        app:layout_constraintStart_toEndOf="@+id/lenar_info_layout"
+        app:layout_constraintTop_toTopOf="@+id/lenar_info_layout" />
 
     <ImageView
         android:id="@+id/layout_mini_btn"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:padding="5dp"
         android:layout_weight="1"
         android:src="@drawable/ic_minimize_2"
-        app:layout_constraintBottom_toBottomOf="@+id/lenar_status_layout"
-        app:layout_constraintEnd_toStartOf="@+id/lenar_status_layout"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="@+id/setting_btn"
+        app:layout_constraintStart_toStartOf="@+id/setting_btn"
+        app:layout_constraintTop_toBottomOf="@+id/setting_btn" />
+
+    <ImageView
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:paddingVertical="5dp"
+        android:src="@drawable/ic_before"
+        app:layout_constraintBottom_toBottomOf="@+id/lenar_info_layout"
+        app:layout_constraintEnd_toStartOf="@+id/lenar_info_layout"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/lenar_status_layout" />
+        app:layout_constraintTop_toTopOf="@+id/lenar_info_layout" />
 
 
     <fragment
-        android:id="@+id/mini_setting_layout"
-        android:name="com.example.lenarv03.utils.FragmentMiniSetting"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/tabLayout"
+        android:id="@+id/lenar_info_layout"
+        android:name="com.example.lenarv03.FragmentLenarInfo"
+        android:layout_width="200dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="40dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginBottom="130dp"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout="@layout/fragment_lenar_info" />
+
+    <fragment
+        android:id="@+id/mini_setting_layout"
+        android:name="com.example.lenarv03.FragmentMiniSetting"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginBottom="170dp"
         tools:layout="@layout/fragment_mini_setting" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -157,56 +180,6 @@
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <LinearLayout
-        android:id="@+id/lenar_status_layout"
-        android:layout_width="160dp"
-        android:layout_height="30dp"
-        android:layout_marginTop="20dp"
-        android:weightSum="4"
-        android:background="@drawable/shape_roundsquare"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageView
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:padding="9dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="center|end"
-            android:src="@drawable/ic_signal2"/>
-
-        <TextView
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:gravity="center|start"
-            android:fontFamily="@font/robotobold"
-            android:text="60ms"
-            android:textColor="@color/white"
-            android:textSize="10dp" />
-
-        <ImageView
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:rotation="90"
-            android:padding="5dp"
-            android:layout_gravity="center"
-            android:src="@drawable/ic_battery"/>
-        <TextView
-            android:gravity="center|start"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:fontFamily="@font/robotobold"
-            android:text="97%"
-            android:textColor="@color/white"
-            android:textSize="10dp" />
-
-    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

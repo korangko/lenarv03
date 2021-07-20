@@ -28,7 +28,6 @@
 
         <activity android:name=".ConnectActivity1"/>
         <activity android:name=".ConnectActivity2"/>
-        <activity android:name=".ConnectActivity3"/>
         <activity android:name=".StreamingSettingActivity"/>
         <activity android:name=".MainActivity"
             android:configChanges="orientation|screenSize"/>

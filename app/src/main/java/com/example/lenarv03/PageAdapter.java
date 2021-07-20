@@ -14,8 +14,8 @@ public class PageAdapter extends FragmentStatePagerAdapter {
     public PageAdapter(FragmentManager fm) {
         super(fm);
         fragments.add(new FragmentCapture());
-        fragments.add(new FragmentTimelapse());
         fragments.add(new FragmentVideo());
+        fragments.add(new FragmentTimelapse());
     }
 
     @Override

@@ -89,8 +89,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         /** tablayout **/
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
         tabLayout.addTab(tabLayout.newTab().setText("Capture"));
-        tabLayout.addTab(tabLayout.newTab().setText("Timelapse"));
         tabLayout.addTab(tabLayout.newTab().setText("Video"));
+        tabLayout.addTab(tabLayout.newTab().setText("Timelapse"));
         viewPager = (ViewPager) findViewById(R.id.viewPager);
         viewPager.setAdapter(new PageAdapter(getSupportFragmentManager()));
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
