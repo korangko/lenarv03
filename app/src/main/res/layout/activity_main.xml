@@ -11,7 +11,7 @@
         android:id="@+id/imageView5"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/background2"
+        android:background="@drawable/background"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -88,35 +88,37 @@
 
     <ImageView
         android:id="@+id/setting_btn"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_weight="1"
-        android:padding="5dp"
+        android:padding="10dp"
+        android:layout_marginEnd="20dp"
         android:src="@drawable/ic_setting"
         app:layout_constraintBottom_toBottomOf="@+id/lenar_info_layout"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/lenar_info_layout"
         app:layout_constraintTop_toTopOf="@+id/lenar_info_layout" />
 
     <ImageView
         android:id="@+id/layout_mini_btn"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:padding="5dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="300dp"
+        android:layout_marginEnd="10dp"
         android:layout_weight="1"
+        android:padding="10dp"
+        android:background="@drawable/shape_roundsquare"
         android:src="@drawable/ic_minimize_2"
-        android:layout_marginTop="20dp"
-        app:layout_constraintEnd_toEndOf="@+id/setting_btn"
-        app:layout_constraintStart_toStartOf="@+id/setting_btn"
-        app:layout_constraintTop_toBottomOf="@+id/setting_btn" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <ImageView
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:paddingVertical="5dp"
+        android:id="@+id/menu_before_btn"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:padding="10dp"
         android:src="@drawable/ic_before"
+        android:layout_marginStart="20dp"
         app:layout_constraintBottom_toBottomOf="@+id/lenar_info_layout"
-        app:layout_constraintEnd_toStartOf="@+id/lenar_info_layout"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/lenar_info_layout" />
 
@@ -124,7 +126,7 @@
     <fragment
         android:id="@+id/lenar_info_layout"
         android:name="com.example.lenarv03.FragmentLenarInfo"
-        android:layout_width="200dp"
+        android:layout_width="140dp"
         android:layout_height="25dp"
         android:layout_marginTop="40dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -136,7 +138,7 @@
         android:id="@+id/mini_setting_layout"
         android:name="com.example.lenarv03.FragmentMiniSetting"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="120dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

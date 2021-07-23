@@ -19,7 +19,7 @@ import com.github.ybq.android.spinkit.SpinKitView;
 
 import static com.example.lenarv03.utils.WifiConnect.LenarConnected;
 
-public class ConnectActivity1 extends Activity {
+public class ConnectActivity extends Activity {
 
     ImageView checkSign;
     ConstraintLayout connectionFailLayout;
@@ -32,7 +32,7 @@ public class ConnectActivity1 extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_connect1);
+        setContentView(R.layout.activity_connect);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         reconnectBtn = findViewById(R.id.reconnect_btn);
@@ -61,9 +61,9 @@ public class ConnectActivity1 extends Activity {
             // connection wait till 6s and repeat 3 times
             for (int i = 0; i < 3; i++) {
                 long startTime = System.currentTimeMillis();
-                mWifiConnect.connectLenar(ConnectActivity1.this);
+                mWifiConnect.connectLenar(ConnectActivity.this);
                 while((System.currentTimeMillis() - startTime) < 6000 && !LenarConnected) {
-                    mWifiConnect.connectionCheck(ConnectActivity1.this);
+                    mWifiConnect.connectionCheck(ConnectActivity.this);
                 }
                 if(LenarConnected){
                     //if lenar is connected, breakout of for()
@@ -82,9 +82,9 @@ public class ConnectActivity1 extends Activity {
                         handler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                startActivity(new Intent(ConnectActivity1.this, ConnectActivity2.class)); //로딩이 끝난 후, ChoiceFunction 이동
+                                startActivity(new Intent(ConnectActivity.this, MainMenuActivity.class)); //로딩이 끝난 후, ChoiceFunction 이동
                                 overridePendingTransition(R.anim.fadein, R.anim.fadeout);
-                                ConnectActivity1.this.finish();
+                                ConnectActivity.this.finish();
                             }
                         }, 3000);
             }else{

@@ -32,7 +32,7 @@ import static com.example.lenarv03.utils.RtspReceiver.vout;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    ImageView settingBtn, layoutMiniBtn;
+    ImageView settingBtn, layoutMiniBtn,menuBeforeBtn;
     TextureView rtspReceiveView;
     boolean displayMaximized;
     static public ViewPager viewPager;
@@ -70,6 +70,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         displayMaximized = true;
         settingBtn = findViewById(R.id.setting_btn);
         settingBtn.setOnClickListener(this);
+        menuBeforeBtn = findViewById(R.id.menu_before_btn);
+        menuBeforeBtn.setOnClickListener(this);
+
         loadingLayout = findViewById(R.id.loading_layout);
         loadingPercentage = findViewById(R.id.loading_percentage);
         layoutMiniBtn = findViewById(R.id.layout_mini_btn);
@@ -214,6 +217,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.setting_btn:
                 startActivity(new Intent(MainActivity.this, StreamingSettingActivity.class)); //로딩이 끝난 후, ChoiceFunction 이동
+                overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+                MainActivity.this.finish();
+                break;
+            case R.id.menu_before_btn:
+                startActivity(new Intent(MainActivity.this, MainMenuActivity.class)); //로딩이 끝난 후, ChoiceFunction 이동
                 overridePendingTransition(R.anim.fadein, R.anim.fadeout);
                 MainActivity.this.finish();
                 break;

@@ -6,7 +6,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="120dp"
         android:orientation="vertical"
         android:weightSum="2"
         app:layout_constraintTop_toTopOf="parent">
@@ -21,44 +21,81 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:weightSum="2">
 
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:src="@drawable/ic_volume_up"/>
+                    android:layout_weight="1"
+                    android:padding="9dp"
+                    android:src="@drawable/ic_volume_up" />
 
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
-
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_gravity="center|top"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/robotolight"
+                    android:gravity="center|top"
+                    android:text="Sound: ON"
+                    android:textColor="@color/white"
+                    android:textSize="10dp" />
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:weightSum="2">
 
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:padding="9dp"
+                    android:src="@drawable/ic_mic" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_gravity="center|top"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/robotolight"
+                    android:gravity="center|top"
+                    android:text="Mic: ON"
+                    android:textColor="@color/white"
+                    android:textSize="10dp" />
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:weightSum="2">
 
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:padding="9dp"
+                    android:src="@drawable/ic_panorama_angle" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_gravity="center|top"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/robotolight"
+                    android:gravity="center|top"
+                    android:text="16 : 9"
+                    android:textColor="@color/white"
+                    android:textSize="10dp" />
 
             </LinearLayout>
 

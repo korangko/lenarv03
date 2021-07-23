@@ -6,12 +6,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.LocationManager;
-import android.media.Image;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.WindowManager;
-import android.view.animation.Animation;
-import android.widget.ImageView;
 
 public class SplashActivity extends Activity {
 
@@ -36,7 +33,7 @@ public class SplashActivity extends Activity {
 
     private class splashhandler implements Runnable {
         public void run() {
-            startActivity(new Intent(getApplication(), ConnectActivity1.class)); //로딩이 끝난 후, ChoiceFunction 이동
+            startActivity(new Intent(getApplication(), ConnectActivity.class)); //로딩이 끝난 후, ChoiceFunction 이동
             overridePendingTransition(R.anim.fadein, R.anim.fadeout);
             SplashActivity.this.finish(); // 로딩페이지 Activity stack에서 제거
         }
@@ -54,7 +51,7 @@ public class SplashActivity extends Activity {
 
         }else{
             //if location mode is enabled
-            startActivity(new Intent(getApplication(), ConnectActivity1.class)); //로딩이 끝난 후, ChoiceFunction 이동
+            startActivity(new Intent(getApplication(), ConnectActivity.class)); //로딩이 끝난 후, ChoiceFunction 이동
             overridePendingTransition(R.anim.fadein, R.anim.fadeout);
             SplashActivity.this.finish();
         }
