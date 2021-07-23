@@ -6,9 +6,9 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="120dp"
+        android:layout_height="60dp"
         android:orientation="vertical"
-        android:weightSum="2"
+        android:weightSum="1"
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
@@ -78,14 +78,12 @@
                 android:layout_weight="1"
                 android:orientation="vertical"
                 android:weightSum="2">
-
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:padding="9dp"
                     android:src="@drawable/ic_panorama_angle" />
-
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
@@ -99,19 +97,56 @@
 
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:weightSum="2">
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:padding="9dp"
+                    android:src="@drawable/ic_monitor" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_gravity="center|top"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/robotolight"
+                    android:gravity="center|top"
+                    android:text="2160P"
+                    android:textColor="@color/white"
+                    android:textSize="10dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:weightSum="2">
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:padding="9dp"
+                    android:src="@drawable/ic_signal3" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_gravity="center|top"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/robotolight"
+                    android:gravity="center|top"
+                    android:text="Bitrate : 16M"
+                    android:textColor="@color/white"
+                    android:textSize="10dp" />
+            </LinearLayout>
+
 
         </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:orientation="horizontal">
-
-
-        </LinearLayout>
-
-
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
