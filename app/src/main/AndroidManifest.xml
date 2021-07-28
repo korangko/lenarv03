@@ -29,7 +29,7 @@
         <activity android:name=".ConnectActivity"/>
         <activity android:name=".MainMenuActivity"/>
         <activity android:name=".SettingActivity"/>
-        <activity android:name=".LiveStreamActivity1"/>
+        <activity android:name=".LiveSelectActivity"/>
         <activity android:name=".LiveYoutubeActivity"/>
         <activity android:name=".MainActivity"
             android:configChanges="orientation|screenSize"/>

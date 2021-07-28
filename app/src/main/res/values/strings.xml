@@ -2,4 +2,6 @@
     <string name="app_name">lenarv03</string>
     <string name="endEvent">END EVENT</string>
     <string name="endingEvent">Ending event. Please wait…</string>
+    <string name="creatingEvent">Creating event. Please wait…</string>
+    <string name="startingEvent">Starting event. Please wait…</string>
 </resources>

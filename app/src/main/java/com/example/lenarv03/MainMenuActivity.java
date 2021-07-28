@@ -33,7 +33,7 @@ public class MainMenuActivity extends Activity {
     }
 
     public void live_btn_click(View view) {
-        startActivity(new Intent(MainMenuActivity.this, LiveStreamActivity1.class)); //로딩이 끝난 후, ChoiceFunction 이동
+        startActivity(new Intent(MainMenuActivity.this, LiveSelectActivity.class)); //로딩이 끝난 후, ChoiceFunction 이동
         overridePendingTransition(R.anim.fadein, R.anim.fadeout);
         MainMenuActivity.this.finish();
     }

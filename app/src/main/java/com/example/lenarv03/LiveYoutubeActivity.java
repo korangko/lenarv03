@@ -15,10 +15,11 @@ import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.lenarv03.utils.EventData;
+import com.example.lenarv03.utils.Utils;
 import com.example.lenarv03.utils.YouTubeApi;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -32,16 +33,21 @@ import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecovera
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.gson.GsonFactory;
+import com.google.api.client.util.ExponentialBackOff;
 import com.google.api.services.youtube.YouTube;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
 
 import static com.google.api.client.extensions.android.http.AndroidHttp.newCompatibleTransport;
 
-public class LiveYoutubeActivity extends Activity implements View.OnClickListener{
+public class LiveYoutubeActivity extends Activity implements View.OnClickListener {
 
     Context mainContext;
     TextView accountText;
+    EditText liveTitleText, liveDescText;
 
     // to log in to google account
     private static final String TAG = "josh_action";
@@ -72,11 +78,16 @@ public class LiveYoutubeActivity extends Activity implements View.OnClickListene
 
         mainContext = this;
 
+        /**variables**/
         findViewById(R.id.menu_before_btn).setOnClickListener(this);
         findViewById(R.id.sign_in_button).setOnClickListener(this);
-        accountText = findViewById(R.id.google_account_text);
+        findViewById(R.id.live_start_btn).setOnClickListener(this);
+        liveTitleText = findViewById(R.id.live_stream_title_text);
+        liveDescText = findViewById(R.id.live_stream_desc_text);
 
         /**Google account**/
+        accountText = findViewById(R.id.google_account_text);
+        accountText.setOnClickListener(this);
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build();
@@ -94,13 +105,26 @@ public class LiveYoutubeActivity extends Activity implements View.OnClickListene
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.sign_in_button:
+            case R.id.google_account_text:
                 signIn();
                 break;
             case R.id.menu_before_btn:
-                startActivity(new Intent(LiveYoutubeActivity.this, LiveStreamActivity1.class)); //로딩이 끝난 후, ChoiceFunction 이동
+                startActivity(new Intent(LiveYoutubeActivity.this, LiveSelectActivity.class)); //로딩이 끝난 후, ChoiceFunction 이동
                 overridePendingTransition(R.anim.fadein, R.anim.fadeout);
                 LiveYoutubeActivity.this.finish();
+                break;
+            case R.id.live_start_btn:
+
+                //thread live create
+                CreateYoutubeLive createLiveThread = new CreateYoutubeLive();
+                createLiveThread.start();
+
+                // async live create
+//                credential = GoogleAccountCredential.usingOAuth2(
+//                        getApplicationContext(), Arrays.asList(Utils.SCOPES));
+//                credential.setBackOff(new ExponentialBackOff());
+//                credential.setSelectedAccountName(AccountName);
+//                new CreateLiveEventTask().execute();
                 break;
         }
 
@@ -110,11 +134,15 @@ public class LiveYoutubeActivity extends Activity implements View.OnClickListene
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
+    //original
+//    private void signIn() {
+//        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+//        startActivityForResult(signInIntent, RC_SIGN_IN);
+//    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        System.out.println("josh case entered");
         switch (requestCode) {
             case RC_SIGN_IN:
                 Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
@@ -134,9 +162,7 @@ public class LiveYoutubeActivity extends Activity implements View.OnClickListene
                         && data.getExtras() != null) {
                     String accountName = data.getExtras().getString(
                             AccountManager.KEY_ACCOUNT_NAME);
-                    System.out.println("josh case1");
                     if (accountName != null) {
-                        System.out.println("josh case12");
                         credential.setSelectedAccountName(AccountName);
                     }
                 }
@@ -256,5 +282,113 @@ public class LiveYoutubeActivity extends Activity implements View.OnClickListene
         protected void onPostExecute(Void param) {
             progressDialog.dismiss();
         }
+
+    }
+
+    public class CreateYoutubeLive extends Thread {
+        @Override
+        public void run() {
+            mHandler.post(new Runnable() {
+                @Override
+                public void run() {  // 화면에 그려줄 작업
+                    dialog.show();
+                }
+            });
+
+            credential = GoogleAccountCredential.usingOAuth2(
+                    getApplicationContext(), Arrays.asList(Utils.SCOPES));
+            credential.setBackOff(new ExponentialBackOff());
+            credential.setSelectedAccountName(AccountName);
+
+            //to start youtube stream
+            YouTube youtube = new YouTube.Builder(transport, jsonFactory,
+                    credential).setApplicationName(APP_NAME)
+                    .build();
+            String date = new Date().toString();
+//            if(liveTitleText.getText() != null){
+//                YouTubeApi.createLiveEvent(youtube, "Event - " + date,
+//                        liveTitleText.getText().toString());
+//                System.out.println("josh live made1");
+//
+//            }else{
+            YouTubeApi.createLiveEvent(youtube, "Event - " + date,
+                    "Live stream by LENAR - " + date);
+            System.out.println("josh live made2");
+//            }
+            try {
+                YouTubeApi.getLiveEvents(youtube);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            dialog.dismiss();
+        }
+    }
+
+    private class CreateLiveEventTask extends
+            AsyncTask<Void, Void, List<EventData>> {
+        private ProgressDialog progressDialog;
+
+        @Override
+        protected void onPreExecute() {
+            progressDialog = ProgressDialog.show(LiveYoutubeActivity.this, null,
+                    getResources().getText(R.string.creatingEvent), true);
+        }
+
+        @Override
+        protected List<EventData> doInBackground(
+                Void... params) {
+            YouTube youtube = new YouTube.Builder(transport, jsonFactory,
+                    credential).setApplicationName(APP_NAME)
+                    .build();
+            try {
+                String date = new Date().toString();
+                YouTubeApi.createLiveEvent(youtube, "Event - " + date,
+                        "LENAR App LIVE STERAMING Testing - " + date);
+                return YouTubeApi.getLiveEvents(youtube);
+
+            } catch (UserRecoverableAuthIOException e) {
+                startActivityForResult(e.getIntent(), REQUEST_AUTHORIZATION);
+            } catch (IOException e) {
+                Log.e(MainActivity.APP_NAME, "", e);
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(
+                List<EventData> fetchedEvents) {
+            progressDialog.dismiss();
+        }
+    }
+
+    private class StartEventTask extends AsyncTask<String, Void, Void> {
+        private ProgressDialog progressDialog;
+
+        @Override
+        protected void onPreExecute() {
+            progressDialog = ProgressDialog.show(LiveYoutubeActivity.this, null,
+                    getResources().getText(R.string.startingEvent), true);
+        }
+
+        @Override
+        protected Void doInBackground(String... params) {
+            YouTube youtube = new YouTube.Builder(transport, jsonFactory,
+                    credential).setApplicationName(APP_NAME)
+                    .build();
+            try {
+                YouTubeApi.startEvent(youtube, params[0]);
+            } catch (UserRecoverableAuthIOException e) {
+                startActivityForResult(e.getIntent(), REQUEST_AUTHORIZATION);
+            } catch (IOException e) {
+                Log.e(MainActivity.APP_NAME, "", e);
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void param) {
+            progressDialog.dismiss();
+        }
+
     }
 }
