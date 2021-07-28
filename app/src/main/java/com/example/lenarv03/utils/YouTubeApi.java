@@ -159,7 +159,6 @@ public class YouTubeApi {
         // liveBroadcastRequest.setMine(true);
         liveBroadcastRequest.setBroadcastStatus("upcoming");
 
-        System.out.println("josh take 1");
         // List request is executed and list of broadcasts are returned
         LiveBroadcastListResponse returnedListResponse = liveBroadcastRequest.execute();
 

@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.lenarv03.utils.EventData;
 import com.example.lenarv03.utils.Utils;
@@ -88,6 +89,7 @@ public class LiveYoutubeActivity extends Activity implements View.OnClickListene
         /**Google account**/
         accountText = findViewById(R.id.google_account_text);
         accountText.setOnClickListener(this);
+
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build();
@@ -99,7 +101,6 @@ public class LiveYoutubeActivity extends Activity implements View.OnClickListene
         builder.setCancelable(false); // if you want user to wait for some process to finish,
         builder.setView(R.layout.layout_loading_dialog);
         dialog = builder.create();
-
     }
 
     @Override
@@ -131,21 +132,22 @@ public class LiveYoutubeActivity extends Activity implements View.OnClickListene
     }
 
     private void signIn() {
+        System.out.println("josh this is !011");
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+        System.out.println("josh this is !012");
         startActivityForResult(signInIntent, RC_SIGN_IN);
+        System.out.println("josh this is !013");
     }
-    //original
-//    private void signIn() {
-//        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-//        startActivityForResult(signInIntent, RC_SIGN_IN);
-//    }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
             case RC_SIGN_IN:
+                System.out.println("josh this is !0");
                 Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+                System.out.println("josh this is !00");
                 handleSignInResult(task);
                 break;
             case REQUEST_GMS_ERROR_DIALOG:
@@ -158,11 +160,14 @@ public class LiveYoutubeActivity extends Activity implements View.OnClickListene
                 }
                 break;
             case REQUEST_ACCOUNT_PICKER:
+                System.out.println("josh this is !");
                 if (resultCode == Activity.RESULT_OK && data != null
                         && data.getExtras() != null) {
+                    System.out.println("josh this is !1");
                     String accountName = data.getExtras().getString(
                             AccountManager.KEY_ACCOUNT_NAME);
                     if (accountName != null) {
+                        System.out.println("josh this is !2");
                         credential.setSelectedAccountName(AccountName);
                     }
                 }
@@ -176,7 +181,6 @@ public class LiveYoutubeActivity extends Activity implements View.OnClickListene
                     }
                 }
                 break;
-
             case REQUEST_AUTHORIZATION:
                 System.out.println("josh error authorization");
                 break;
@@ -199,7 +203,7 @@ public class LiveYoutubeActivity extends Activity implements View.OnClickListene
 
     public void updateUI(GoogleSignInAccount account) {
         if (account != null) {
-//            Toast.makeText(this, "Signed In successfully", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Signed In successfully", Toast.LENGTH_SHORT).show();
             GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
             if (acct != null) {
                 String personName = acct.getDisplayName();
@@ -212,7 +216,7 @@ public class LiveYoutubeActivity extends Activity implements View.OnClickListene
                 accountText.setText(AccountName);
             } else {
                 accountText.setText("Log In");
-//                Toast.makeText(this, "Log In First", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Log In First", Toast.LENGTH_LONG).show();
             }
         }
     }

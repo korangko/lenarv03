@@ -173,7 +173,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
                     viewWidth = width;
                     viewHeight = height;
-                    mRtspReceiver.createPlayer(MainActivity.this, url, rtspReceiveView, height, width);
+//                    mRtspReceiver.createPlayer(MainActivity.this, url, rtspReceiveView, height, width);
                 }
 
                 @Override
