@@ -19,7 +19,7 @@
         android:layout_height="match_parent"
         android:alpha="0.1"
         android:scaleType="centerCrop"
-        android:src="@drawable/lenar_wallpaper3"
+        android:src="@drawable/lenar1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

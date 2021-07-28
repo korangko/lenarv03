@@ -21,6 +21,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.lenarv03.utils.CustomOrientationEventListener;
+import com.example.lenarv03.utils.EventData;
 import com.example.lenarv03.utils.PermissionSupport;
 import com.example.lenarv03.utils.RtspReceiver;
 import com.google.android.material.tabs.TabLayout;
@@ -60,6 +61,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     int viewWidth, viewHeight;
     static public ConstraintLayout reconnectLayout;
     TextView reconnectBtn;
+    //google variable
+    public static final String APP_NAME = "YoutubeTest";
+    public static String broadCastingUrl = null;
+    public static EventData currentEvent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

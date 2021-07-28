@@ -21,13 +21,19 @@ public class MainMenuActivity extends Activity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         graphicImage =findViewById(R.id.background_circle);
-        scale = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.scale);
+        scale = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.alpha);
         graphicImage.startAnimation(scale);
 
     }
 
     public void video_btn_click(View view) {
         startActivity(new Intent(MainMenuActivity.this, MainActivity.class)); //로딩이 끝난 후, ChoiceFunction 이동
+        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+        MainMenuActivity.this.finish();
+    }
+
+    public void live_btn_click(View view) {
+        startActivity(new Intent(MainMenuActivity.this, LiveStreamActivity1.class)); //로딩이 끝난 후, ChoiceFunction 이동
         overridePendingTransition(R.anim.fadein, R.anim.fadeout);
         MainMenuActivity.this.finish();
     }

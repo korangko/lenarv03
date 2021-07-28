@@ -115,12 +115,13 @@
         android:id="@+id/menu_before_btn"
         android:layout_width="40dp"
         android:layout_height="40dp"
+        android:layout_marginStart="20dp"
         android:padding="10dp"
         android:src="@drawable/ic_before"
-        android:layout_marginStart="20dp"
+        android:layout_marginTop="40dp"
         app:layout_constraintBottom_toBottomOf="@+id/lenar_info_layout"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/lenar_info_layout" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <fragment
