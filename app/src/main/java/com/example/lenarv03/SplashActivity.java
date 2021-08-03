@@ -1,11 +1,7 @@
 package com.example.lenarv03;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -26,15 +22,14 @@ public class SplashActivity extends Activity {
         setContentView(R.layout.activity_splash);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
-//        statusCheck();
         /**permission**/
         permissionCheck();
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-//        statusCheck();
     }
 
     private class splashhandler implements Runnable {
@@ -50,40 +45,40 @@ public class SplashActivity extends Activity {
         //초반 플래시 화면에서 넘어갈때 뒤로가기 버튼 못누르게 함
     }
 
-    public void statusCheck() {
-        final LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-            buildAlertMessageNoGps();
-
-        } else {
-            //if location mode is enabled
-            startActivity(new Intent(getApplication(), ConnectActivity.class)); //로딩이 끝난 후, ChoiceFunction 이동
-            overridePendingTransition(R.anim.fadein, R.anim.fadeout);
-            SplashActivity.this.finish();
-        }
-    }
-
-    private void buildAlertMessageNoGps() {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Your GPS seems to be disabled, do you want to enable it?")
-                .setCancelable(false)
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    public void onClick(final DialogInterface dialog, final int id) {
-                        startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
-                        //if location mode is enabled
-//                        startActivity(new Intent(getApplication(), ConnectActivity1.class)); //로딩이 끝난 후, ChoiceFunction 이동
-//                        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
-//                        SplashActivity.this.finish();
-                    }
-                })
-                .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    public void onClick(final DialogInterface dialog, final int id) {
-                        dialog.cancel();
-                    }
-                });
-        final AlertDialog alert = builder.create();
-        alert.show();
-    }
+//    public void statusCheck() {
+//        final LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+//        if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+//            buildAlertMessageNoGps();
+//
+//        } else {
+//            //if location mode is enabled
+//            startActivity(new Intent(getApplication(), ConnectActivity.class)); //로딩이 끝난 후, ChoiceFunction 이동
+//            overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+//            SplashActivity.this.finish();
+//        }
+//    }
+//
+//    private void buildAlertMessageNoGps() {
+//        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//        builder.setMessage("Your GPS seems to be disabled, do you want to enable it?")
+//                .setCancelable(false)
+//                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+//                    public void onClick(final DialogInterface dialog, final int id) {
+//                        startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+//                        //if location mode is enabled
+////                        startActivity(new Intent(getApplication(), ConnectActivity1.class)); //로딩이 끝난 후, ChoiceFunction 이동
+////                        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+////                        SplashActivity.this.finish();
+//                    }
+//                })
+//                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+//                    public void onClick(final DialogInterface dialog, final int id) {
+//                        dialog.cancel();
+//                    }
+//                });
+//        final AlertDialog alert = builder.create();
+//        alert.show();
+//    }
 
     private void permissionCheck() {
         if (Build.VERSION.SDK_INT >= 23) {
@@ -91,6 +86,8 @@ public class SplashActivity extends Activity {
             if (!permission.checkPermission()) {
                 permission.requestPermission();
             }
+            Handler hd = new Handler();
+            hd.postDelayed(new splashhandler(), 1000); // 1초 후에 hd handler 실행  3000ms = 3초
         }
     }
 
