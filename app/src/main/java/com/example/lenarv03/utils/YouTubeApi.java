@@ -41,8 +41,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 
-import static com.example.lenarv03.MainActivity.broadCastingUrl;
-import static com.example.lenarv03.MainActivity.currentEvent;
+import static com.example.lenarv03.LiveYoutubeActivity.broadCastingUrl;
+import static com.example.lenarv03.LiveYoutubeActivity.currentEvent;
 
 
 public class YouTubeApi {

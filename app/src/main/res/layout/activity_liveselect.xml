@@ -13,13 +13,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:alpha="0.05"
-        android:src="@drawable/lenar2"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
         android:id="@+id/menu_before_btn"
@@ -49,16 +42,16 @@
     <LinearLayout
         android:id="@+id/youtube_selectbtn"
         android:layout_width="250dp"
-        android:layout_height="100dp"
+        android:layout_height="80dp"
         android:orientation="horizontal"
-        android:paddingHorizontal="20dp"
+        android:paddingHorizontal="25dp"
         app:layout_constraintBottom_toTopOf="@+id/facebook_selectbtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/imageView5">
 
         <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
             android:layout_gravity="center"
             android:layout_marginStart="20dp"
             android:src="@drawable/youtube_icon" />
@@ -71,24 +64,24 @@
             android:fontFamily="@font/robotolight"
             android:text="Youtube"
             android:textColor="@color/white"
-            android:textSize="20dp" />
+            android:textSize="15dp" />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/facebook_selectbtn"
         android:layout_width="250dp"
-        android:layout_height="100dp"
+        android:layout_height="80dp"
         android:onClick="youtube_selectbtn_click"
         android:orientation="horizontal"
-        android:paddingHorizontal="20dp"
+        android:paddingHorizontal="25dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/imageView5"
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
             android:layout_gravity="center"
             android:layout_marginStart="20dp"
             android:src="@drawable/ico_facebook" />
@@ -101,23 +94,23 @@
             android:fontFamily="@font/robotolight"
             android:text="FaceBook Live"
             android:textColor="@color/white"
-            android:textSize="20dp" />
+            android:textSize="15dp" />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/twitch_selectbtn"
         android:layout_width="250dp"
-        android:layout_height="100dp"
+        android:layout_height="80dp"
         android:onClick="youtube_selectbtn_click"
         android:orientation="horizontal"
-        android:paddingHorizontal="20dp"
+        android:paddingHorizontal="25dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/imageView5"
         app:layout_constraintTop_toBottomOf="@+id/facebook_selectbtn">
 
         <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
             android:layout_gravity="center"
             android:layout_marginStart="20dp"
             android:src="@drawable/ico_twitch" />
@@ -130,7 +123,7 @@
             android:fontFamily="@font/robotolight"
             android:text="Twitch"
             android:textColor="@color/white"
-            android:textSize="20dp" />
+            android:textSize="15dp" />
     </LinearLayout>
 
     <TextView

@@ -21,8 +21,6 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.lenarv03.utils.CustomOrientationEventListener;
-import com.example.lenarv03.utils.EventData;
-import com.example.lenarv03.utils.PermissionSupport;
 import com.example.lenarv03.utils.RtspReceiver;
 import com.google.android.material.tabs.TabLayout;
 
@@ -48,8 +46,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     //loading layout
     static public LinearLayout loadingLayout;
     static public TextView loadingPercentage;
-    //permission check
-    private PermissionSupport permission;
     //Orientation Variable
     private CustomOrientationEventListener customOrientationEventListener;
     final int ROTATION_O = 1;
@@ -63,8 +59,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     TextView reconnectBtn;
     //google variable
     public static final String APP_NAME = "YoutubeTest";
-    public static String broadCastingUrl = null;
-    public static EventData currentEvent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,8 +112,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         });
 
-        /**permission**/
-        permissionCheck();
         /**RTSP size setup**/
         monitorViewSizeChange(rtspReceiveView, 1.5, true);
         /**orientation change**/
@@ -158,14 +150,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         customOrientationEventListener.enable();
     }
 
-    private void permissionCheck() {
-        if (Build.VERSION.SDK_INT >= 23) {
-            permission = new PermissionSupport(this, this);
-            if (!permission.checkPermission()) {
-                permission.requestPermission();
-            }
-        }
-    }
+
 
     private TextureView.SurfaceTextureListener mSurfaceTextureListener =
             new TextureView.SurfaceTextureListener() {

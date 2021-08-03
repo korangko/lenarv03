@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -12,13 +13,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:alpha="0.05"
-        android:src="@drawable/lenar2"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+
 
     <ImageView
         android:id="@+id/menu_before_btn"
@@ -45,50 +40,54 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+
+    <ImageView
+        android:id="@+id/google_account_image"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:scaleType="centerCrop"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView14" />
+
+
+    <TextView
+        android:id="@+id/google_account_text"
+        android:layout_width="wrap_content"
+        android:layout_height="25dp"
+        android:fontFamily="@font/robotolight"
+        android:gravity="center"
+        android:text="google_account"
+        android:textColor="@color/white"
+        android:textSize="12dp"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/google_account_image" />
+
+    <TextView
+        android:id="@+id/logout_btn"
+        android:layout_width="80dp"
+        android:layout_height="25dp"
+        android:background="@drawable/shape_color_roundsquare"
+        android:fontFamily="@font/robotolight"
+        android:gravity="center"
+        android:text="Log out"
+        android:textColor="@color/white"
+        android:textSize="12dp"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="@+id/google_account_text"
+        app:layout_constraintStart_toStartOf="@+id/google_account_text"
+        app:layout_constraintTop_toBottomOf="@+id/google_account_text" />
+
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="400dp"
         android:orientation="vertical"
         android:layout_marginTop="20dp"
-        app:layout_constraintTop_toBottomOf="@+id/textView14">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginStart="30dp"
-                android:layout_weight="1"
-                android:fontFamily="@font/robotolight"
-                android:gravity="start"
-                android:text="Account"
-                android:textColor="@color/white"
-                android:textSize="12dp" />
-
-            <com.google.android.gms.common.SignInButton
-                android:id="@+id/sign_in_button"
-                android:layout_width="120dp"
-                android:layout_height="40dp"
-                android:visibility="gone" />
-
-            <TextView
-                android:id="@+id/google_account_text"
-                android:layout_width="0dp"
-                android:layout_height="25dp"
-                android:layout_marginEnd="25dp"
-                android:layout_weight="1"
-                android:background="@drawable/shape_color_roundsquare2"
-                android:fontFamily="@font/robotolight"
-                android:gravity="center"
-                android:text="null"
-                android:textColor="@color/white"
-                android:textSize="12dp"
-                android:visibility="visible" />
-        </LinearLayout>
+        app:layout_constraintTop_toBottomOf="@+id/logout_btn">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -103,7 +102,7 @@
                 android:layout_weight="1"
                 android:fontFamily="@font/robotolight"
                 android:gravity="start"
-                android:text="Live stream Title"
+                android:text="Title"
                 android:textColor="@color/white"
                 android:textSize="12dp" />
 
@@ -113,11 +112,14 @@
                 android:layout_width="0dp"
                 android:layout_height="25dp"
                 android:layout_marginEnd="25dp"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:background="@drawable/shape_color_roundsquare2"
                 android:fontFamily="@font/robotolight"
                 android:gravity="center"
                 android:textColor="@color/white"
+                android:inputType="text"
+                android:maxLines="1"
+                android:imeOptions="actionDone"
                 android:visibility="visible" />
         </LinearLayout>
 
@@ -134,7 +136,7 @@
                 android:layout_weight="1"
                 android:fontFamily="@font/robotolight"
                 android:gravity="start"
-                android:text="Live stream Description"
+                android:text="Description"
                 android:textColor="@color/white"
                 android:textSize="12dp" />
 
@@ -144,10 +146,13 @@
                 android:layout_width="0dp"
                 android:layout_height="25dp"
                 android:layout_marginEnd="25dp"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:background="@drawable/shape_color_roundsquare2"
                 android:fontFamily="@font/robotolight"
                 android:gravity="center"
+                android:inputType="text"
+                android:maxLines="1"
+                android:imeOptions="actionDone"
                 android:textColor="@color/white"
                 android:visibility="visible" />
         </LinearLayout>
@@ -213,20 +218,20 @@
                 android:textColor="@color/white"
                 android:textSize="12dp"
                 android:visibility="visible" />
-
         </LinearLayout>
 
-
     </LinearLayout>
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/live_start_btn"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginHorizontal="80dp"
+        android:layout_marginBottom="40dp"
         android:background="@drawable/shape_color_roundsquare"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+        tools:layout_editor_absoluteX="80dp">
 
         <TextView
             android:id="@+id/textView11"
