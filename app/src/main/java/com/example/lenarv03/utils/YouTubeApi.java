@@ -14,11 +14,20 @@
 
 package com.example.lenarv03.utils;
 
+import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 
 import com.example.lenarv03.MainActivity;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
 import com.google.api.client.googleapis.json.GoogleJsonResponseException;
+import com.google.api.client.http.HttpTransport;
+import com.google.api.client.json.JsonFactory;
+import com.google.api.client.json.gson.GsonFactory;
 import com.google.api.client.util.DateTime;
+import com.google.api.client.util.ExponentialBackOff;
 import com.google.api.services.youtube.YouTube;
 import com.google.api.services.youtube.YouTube.LiveBroadcasts.Transition;
 import com.google.api.services.youtube.model.CdnSettings;
@@ -36,13 +45,13 @@ import com.google.api.services.youtube.model.MonitorStreamInfo;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 
-import static com.example.lenarv03.LiveYoutubeActivity.broadCastingUrl;
-import static com.example.lenarv03.LiveYoutubeActivity.currentEvent;
+import static com.google.api.client.extensions.android.http.AndroidHttp.newCompatibleTransport;
 
 
 public class YouTubeApi {
@@ -50,6 +59,20 @@ public class YouTubeApi {
     public static final String RTMP_URL_KEY = "rtmpUrl";
     public static final String BROADCAST_ID_KEY = "broadcastId";
     private static final int FUTURE_DATE_OFFSET_MILLIS = 5 * 1000;
+
+    public static GoogleSignInAccount account;
+    public static GoogleSignInClient mGoogleSignInClient;
+    public static String broadCastingUrl = null;
+    public static EventData currentEvent;
+    public static String AccountMail;
+    public static String AccountName;
+
+    public static boolean forKids = false;
+    public static String broadcastPublic = "public";
+
+    public static GoogleAccountCredential credential;
+    public static HttpTransport transport = newCompatibleTransport();
+    public static JsonFactory jsonFactory = new GsonFactory();
 
     public static void createLiveEvent(YouTube youtube, String description,
                                        String name) {
@@ -66,8 +89,9 @@ public class YouTubeApi {
         String date = dateFormat.format(futureDate);
 
         Log.i(MainActivity.APP_NAME, String.format(
-                "Creating event: name='%s', description='%s', date='%s'.",
-                name, description, date));
+                "Creating event: name='%s',broadcastmode='%s', description='%s', date='%s'.",
+                name,broadcastPublic, description, date));
+        System.out.println("josh kid content = " + forKids);
 
         try {
 
@@ -83,8 +107,9 @@ public class YouTubeApi {
 
             // Create LiveBroadcastStatus with privacy status.
             LiveBroadcastStatus status = new LiveBroadcastStatus();
-            status.setPrivacyStatus("public");
-
+            //kid mode and public or private broadcast select
+            status.setSelfDeclaredMadeForKids(forKids);
+            status.setPrivacyStatus(broadcastPublic);
 
             LiveBroadcast broadcast = new LiveBroadcast();
             broadcast.setKind("youtube#liveBroadcast");
@@ -185,55 +210,19 @@ public class YouTubeApi {
         return resultList;
     }
 
-    public static void getLiveEvents2(
-            YouTube youtube) throws IOException {
-        Log.i(MainActivity.APP_NAME, "Requesting live events.");
-
-        YouTube.LiveBroadcasts.List liveBroadcastRequest = youtube
-                .liveBroadcasts().list(Collections.singletonList("id,snippet,contentDetails"));
-        // liveBroadcastRequest.setMine(true);
-        liveBroadcastRequest.setBroadcastStatus("upcoming");
-
-        // List request is executed and list of broadcasts are returned
-        LiveBroadcastListResponse returnedListResponse = liveBroadcastRequest.execute();
-
-        // Get the list of broadcasts associated with the user.
-        List<LiveBroadcast> returnedList = returnedListResponse.getItems();
-
-        List<EventData> resultList = new ArrayList<EventData>(returnedList.size());
-        EventData event;
-        String ingestionAddress = null;
-        for (LiveBroadcast broadcast : returnedList) {
-            event = new EventData();
-            event.setEvent(broadcast);
-            String streamId = broadcast.getContentDetails().getBoundStreamId();
-            if (streamId != null) {
-                ingestionAddress = getIngestionAddress(youtube, streamId);
-                event.setIngestionAddress(ingestionAddress);
-                System.out.println("josh streaming key is = " + ingestionAddress);
-                broadCastingUrl = ingestionAddress;
-            }
-            resultList.add(event);
-        }
-    }
-
     public static void startEvent(YouTube youtube, String broadcastId)
             throws IOException {
 
         try {
-            System.out.println("josh problem solving90");
             Thread.sleep(10000);
 
         } catch (InterruptedException e) {
             Log.e(MainActivity.APP_NAME, "", e);
-            System.out.println("josh problem solving91");
         }
 
         Transition transitionRequest = youtube.liveBroadcasts().transition(
                 "live", broadcastId, Collections.singletonList("status"));
-        System.out.println("josh problem solving92");
         transitionRequest.execute();
-        System.out.println("josh problem solving93");
     }
 
     public static void endEvent(YouTube youtube, String broadcastId)
@@ -258,4 +247,5 @@ public class YouTubeApi {
         return ingestionInfo.getIngestionAddress() + "/"
                 + ingestionInfo.getStreamName();
     }
+
 }

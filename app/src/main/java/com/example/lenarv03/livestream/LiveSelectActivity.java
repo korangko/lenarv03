@@ -1,6 +1,5 @@
-package com.example.lenarv03;
+package com.example.lenarv03.livestream;
 
-import android.accounts.AccountManager;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
@@ -9,27 +8,23 @@ import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 
-import com.example.lenarv03.utils.YouTubeApi;
+import com.example.lenarv03.MainMenuActivity;
+import com.example.lenarv03.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 
+import static com.example.lenarv03.utils.YouTubeApi.AccountMail;
+import static com.example.lenarv03.utils.YouTubeApi.AccountName;
+import static com.example.lenarv03.utils.YouTubeApi.account;
+import static com.example.lenarv03.utils.YouTubeApi.mGoogleSignInClient;
+
 public class LiveSelectActivity extends Activity implements View.OnClickListener {
 
-    // to log in to google account
-    private static final String TAG = "josh_action";
-    GoogleSignInClient mGoogleSignInClient;
-    private static final int REQUEST_GOOGLE_PLAY_SERVICES = 0;
-    private static final int REQUEST_GMS_ERROR_DIALOG = 1;
-    private static final int REQUEST_ACCOUNT_PICKER = 2;
-    public static final int REQUEST_AUTHORIZATION = 3;
-    private static final int REQUEST_STREAMER = 4;
-    private static final int RC_SIGN_IN = 5;
-    private String AccountName;
-    GoogleSignInAccount account;
+    int RC_SIGN_IN = 5;
+    private static final String TAG = "Lenar TAG";
 
 
     @Override
@@ -54,9 +49,9 @@ public class LiveSelectActivity extends Activity implements View.OnClickListener
                         .requestEmail()
                         .build();
                 mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-                GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+                account = GoogleSignIn.getLastSignedInAccount(this);
                 if (account != null) {
-                    startActivity(new Intent(LiveSelectActivity.this, LiveYoutubeActivity.class)); //로딩이 끝난 후, ChoiceFunction 이동
+                    startActivity(new Intent(LiveSelectActivity.this, LiveSettingActivity.class)); //로딩이 끝난 후, ChoiceFunction 이동
                     overridePendingTransition(R.anim.fadein, R.anim.fadeout);
                     LiveSelectActivity.this.finish();
                 }else{
@@ -113,7 +108,12 @@ public class LiveSelectActivity extends Activity implements View.OnClickListener
                 Log.d(TAG, "handleSignInResult:personFamilyName "+personFamilyName);
                 Log.d(TAG, "handleSignInResult:personPhoto "+personPhoto);
 
-                startActivity(new Intent(LiveSelectActivity.this, LiveYoutubeActivity.class)); //로딩이 끝난 후, ChoiceFunction 이동
+                AccountMail = personEmail;
+                AccountName = personName;
+                System.out.println("josh email = " +personEmail);
+                System.out.println("josh name  = " +personName);
+
+                startActivity(new Intent(LiveSelectActivity.this, LiveSettingActivity.class)); //로딩이 끝난 후, ChoiceFunction 이동
                 overridePendingTransition(R.anim.fadein, R.anim.fadeout);
                 LiveSelectActivity.this.finish();
             }

@@ -29,8 +29,9 @@
         <activity android:name=".ConnectActivity"/>
         <activity android:name=".MainMenuActivity"/>
         <activity android:name=".SettingActivity"/>
-        <activity android:name=".LiveSelectActivity"/>
-        <activity android:name=".LiveYoutubeActivity"/>
+        <activity android:name=".livestream.LiveSelectActivity"/>
+        <activity android:name=".livestream.LiveSettingActivity"/>
+        <activity android:name=".livestream.LiveStreamActivity"/>
         <activity android:name=".MainActivity"
             android:configChanges="orientation|screenSize"/>
     </application>

@@ -9,6 +9,8 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
+import com.example.lenarv03.livestream.LiveSelectActivity;
+
 public class MainMenuActivity extends Activity {
 
     ImageView graphicImage;

@@ -31,6 +31,8 @@ import static com.example.lenarv03.utils.RtspReceiver.vout;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
+    public static final String APP_NAME = "lenarv03";
+
     ImageView settingBtn, layoutMiniBtn,menuBeforeBtn;
     TextureView rtspReceiveView;
     boolean displayMaximized;
@@ -42,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     //rtsp receive variables
     public static MediaPlayer mMediaPlayer = null;
     RtspReceiver mRtspReceiver = new RtspReceiver();
-    String url = "rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mov";
+    static public String url = "rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mov";
     //loading layout
     static public LinearLayout loadingLayout;
     static public TextView loadingPercentage;
@@ -57,8 +59,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     int viewWidth, viewHeight;
     static public ConstraintLayout reconnectLayout;
     TextView reconnectBtn;
-    //google variable
-    public static final String APP_NAME = "YoutubeTest";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -149,7 +149,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         customOrientationEventListener.enable();
     }
-
 
 
     private TextureView.SurfaceTextureListener mSurfaceTextureListener =

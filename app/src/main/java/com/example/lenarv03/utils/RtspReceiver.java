@@ -23,6 +23,7 @@ import static com.example.lenarv03.MainActivity.viewPager;
 
 public class RtspReceiver implements IVLCVout.Callback {
 
+
     private LibVLC libvlc;
     private Media m;
     static boolean video_load_complete;
