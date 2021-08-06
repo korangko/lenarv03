@@ -54,7 +54,7 @@
             android:layout_height="35dp"
             android:layout_gravity="center"
             android:layout_marginStart="20dp"
-            android:src="@drawable/youtube_icon" />
+            android:src="@drawable/ico_youtube" />
 
         <TextView
             android:layout_width="wrap_content"

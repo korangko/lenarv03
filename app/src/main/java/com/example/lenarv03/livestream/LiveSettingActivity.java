@@ -129,10 +129,17 @@ public class LiveSettingActivity extends Activity implements View.OnClickListene
                 System.out.println("josh email = " + AccountMail);
                 System.out.println("josh name  = " + AccountName);
                 accountText.setText(AccountMail);
-                Glide.with(this)
-                        .load(personPhoto)
-                        .circleCrop()
-                        .into(accountImage);
+                if(personPhoto == null){
+                    Glide.with(this)
+                            .load(R.drawable.default_profile_image)
+                            .circleCrop()
+                            .into(accountImage);
+                }else{
+                    Glide.with(this)
+                            .load(personPhoto)
+                            .circleCrop()
+                            .into(accountImage);
+                }
 
             } else {
                 Toast.makeText(this, "Log In First", Toast.LENGTH_LONG).show();
