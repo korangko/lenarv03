@@ -4,4 +4,9 @@
     <string name="endingEvent">Ending event. Please wait…</string>
     <string name="creatingEvent">Creating event. Please wait…</string>
     <string name="startingEvent">Starting event. Please wait…</string>
+
+    <string name="facebook_app_id">Facebook App ID</string>
+    <string name="facebook_client_token">Facebook Client ID</string>
+    <string name="fb_login_protocol_scheme">fb_facebook_app_id</string>
+
 </resources>

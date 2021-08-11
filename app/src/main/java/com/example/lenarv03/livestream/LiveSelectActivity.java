@@ -7,14 +7,26 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
 
 import com.example.lenarv03.MainMenuActivity;
 import com.example.lenarv03.R;
+import com.facebook.AccessToken;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.LoginStatusCallback;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
+
+import java.util.Arrays;
 
 import static com.example.lenarv03.utils.YouTubeApi.AccountMail;
 import static com.example.lenarv03.utils.YouTubeApi.AccountName;
@@ -25,6 +37,13 @@ public class LiveSelectActivity extends Activity implements View.OnClickListener
 
     int RC_SIGN_IN = 5;
     private static final String TAG = "Lenar TAG";
+    //facebook live
+    private CallbackManager callbackManager;
+    private LoginButton loginButton;
+
+    private LoginStatusCallback mLoginCallback;
+    private CallbackManager mCallbackManager;
+
 
 
     @Override
@@ -37,6 +56,47 @@ public class LiveSelectActivity extends Activity implements View.OnClickListener
         findViewById(R.id.youtube_selectbtn).setOnClickListener(this);
         findViewById(R.id.facebook_selectbtn).setOnClickListener(this);
         findViewById(R.id.twitch_selectbtn).setOnClickListener(this);
+
+        //facebook test
+        loginButton = (LoginButton)findViewById(R.id.login_button);
+        FacebookSdk.sdkInitialize(getApplicationContext());
+        callbackManager = CallbackManager.Factory.create();
+        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                System.out.println("User ID: " + loginResult.getAccessToken().getUserId() + "\n" + "Auth Token: " + loginResult.getAccessToken().getToken());
+            }
+
+            @Override
+            public void onCancel() {
+                System.out.println("Login attempt canceled.");
+            }
+
+            @Override
+            public void onError(FacebookException e) {
+                System.out.println("Login attempt failed.");
+            }
+
+        });
+
+        //test
+        mCallbackManager = CallbackManager.Factory.create();
+        mLoginCallback = new LoginStatusCallback() {
+            @Override
+            public void onCompleted(AccessToken accessToken) {
+
+            }
+
+            @Override
+            public void onFailure() {
+
+            }
+
+            @Override
+            public void onError(Exception exception) {
+
+            }
+        };
 
     }
 
@@ -59,6 +119,10 @@ public class LiveSelectActivity extends Activity implements View.OnClickListener
                 }
                 break;
             case R.id.facebook_selectbtn:
+                LoginManager loginManager = LoginManager.getInstance();
+                loginManager.logInWithReadPermissions(LiveSelectActivity.this,
+                        Arrays.asList("public_profile", "email"));
+                loginManager.registerCallback(mCallbackManager, (FacebookCallback<LoginResult>) mLoginCallback);
                 break;
             case R.id.twitch_selectbtn:
                 break;
@@ -88,6 +152,8 @@ public class LiveSelectActivity extends Activity implements View.OnClickListener
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             handleSignInResult(task);
         }
+        callbackManager.onActivityResult(requestCode, resultCode, data);
+        mCallbackManager.onActivityResult(requestCode, resultCode, data);
     }
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
