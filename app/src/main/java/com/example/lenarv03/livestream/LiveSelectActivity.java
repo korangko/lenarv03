@@ -16,6 +16,8 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
 import com.facebook.LoginStatusCallback;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
@@ -25,6 +27,9 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Arrays;
 
@@ -38,12 +43,7 @@ public class LiveSelectActivity extends Activity implements View.OnClickListener
     int RC_SIGN_IN = 5;
     private static final String TAG = "Lenar TAG";
     //facebook live
-    private CallbackManager callbackManager;
-    private LoginButton loginButton;
-
-    private LoginStatusCallback mLoginCallback;
-    private CallbackManager mCallbackManager;
-
+    private CallbackManager callbackmanager;
 
 
     @Override
@@ -57,46 +57,7 @@ public class LiveSelectActivity extends Activity implements View.OnClickListener
         findViewById(R.id.facebook_selectbtn).setOnClickListener(this);
         findViewById(R.id.twitch_selectbtn).setOnClickListener(this);
 
-        //facebook test
-        loginButton = (LoginButton)findViewById(R.id.login_button);
         FacebookSdk.sdkInitialize(getApplicationContext());
-        callbackManager = CallbackManager.Factory.create();
-        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-            @Override
-            public void onSuccess(LoginResult loginResult) {
-                System.out.println("User ID: " + loginResult.getAccessToken().getUserId() + "\n" + "Auth Token: " + loginResult.getAccessToken().getToken());
-            }
-
-            @Override
-            public void onCancel() {
-                System.out.println("Login attempt canceled.");
-            }
-
-            @Override
-            public void onError(FacebookException e) {
-                System.out.println("Login attempt failed.");
-            }
-
-        });
-
-        //test
-        mCallbackManager = CallbackManager.Factory.create();
-        mLoginCallback = new LoginStatusCallback() {
-            @Override
-            public void onCompleted(AccessToken accessToken) {
-
-            }
-
-            @Override
-            public void onFailure() {
-
-            }
-
-            @Override
-            public void onError(Exception exception) {
-
-            }
-        };
 
     }
 
@@ -114,15 +75,15 @@ public class LiveSelectActivity extends Activity implements View.OnClickListener
                     startActivity(new Intent(LiveSelectActivity.this, LiveSettingActivity.class)); //로딩이 끝난 후, ChoiceFunction 이동
                     overridePendingTransition(R.anim.fadein, R.anim.fadeout);
                     LiveSelectActivity.this.finish();
-                }else{
+                } else {
                     signIn();
                 }
                 break;
             case R.id.facebook_selectbtn:
-                LoginManager loginManager = LoginManager.getInstance();
-                loginManager.logInWithReadPermissions(LiveSelectActivity.this,
-                        Arrays.asList("public_profile", "email"));
-                loginManager.registerCallback(mCallbackManager, (FacebookCallback<LoginResult>) mLoginCallback);
+                AccessToken accessToken = AccessToken.getCurrentAccessToken();
+                boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
+                System.out.println("josh fb login = " + isLoggedIn);
+                Fblogin();
                 break;
             case R.id.twitch_selectbtn:
                 break;
@@ -135,10 +96,71 @@ public class LiveSelectActivity extends Activity implements View.OnClickListener
         }
     }
 
-    /**google account **/
+    /**
+     * google login
+     **/
     private void signIn() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
+    }
+
+    /**
+     * facebook Login
+     **/
+    private void Fblogin() {
+        callbackmanager = CallbackManager.Factory.create();
+
+        // Set permissions
+        LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("email", "user_photos", "public_profile"));
+
+        LoginManager.getInstance().registerCallback(callbackmanager,
+                new FacebookCallback<LoginResult>() {
+                    @Override
+                    public void onSuccess(LoginResult loginResult) {
+
+                        System.out.println("Success");
+                        GraphRequest.newMeRequest(
+                                loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
+                                    @Override
+                                    public void onCompleted(JSONObject json, GraphResponse response) {
+                                        if (response.getError() != null) {
+                                            // handle error
+                                            System.out.println("ERROR");
+                                        } else {
+                                            System.out.println("Success");
+                                            try {
+
+                                                String jsonresult = String.valueOf(json);
+                                                System.out.println("JSON Result" + jsonresult);
+
+                                                String str_email = json.getString("email");
+                                                String str_id = json.getString("id");
+                                                String str_firstname = json.getString("first_name");
+                                                String str_lastname = json.getString("last_name");
+
+                                            } catch (JSONException e) {
+                                                e.printStackTrace();
+                                            }
+                                        }
+                                    }
+
+                                }).executeAsync();
+
+                    }
+
+                    @Override
+                    public void onCancel() {
+//                        Log.d(TAG_CANCEL,"On cancel");
+                        System.out.println("On cancel");
+
+                    }
+
+                    @Override
+                    public void onError(FacebookException error) {
+//                        Log.d(TAG_ERROR,error.toString());
+                        System.out.println("facebook error log = "+ error);
+                    }
+                });
     }
 
     @Override
@@ -151,10 +173,12 @@ public class LiveSelectActivity extends Activity implements View.OnClickListener
             // a listener.
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             handleSignInResult(task);
+        }else{
+            callbackmanager.onActivityResult(requestCode, resultCode, data);
+
         }
-        callbackManager.onActivityResult(requestCode, resultCode, data);
-        mCallbackManager.onActivityResult(requestCode, resultCode, data);
     }
+
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
             GoogleSignInAccount acct = completedTask.getResult(ApiException.class);
@@ -167,17 +191,17 @@ public class LiveSelectActivity extends Activity implements View.OnClickListener
                 String personId = acct.getId();
                 Uri personPhoto = acct.getPhotoUrl();
 
-                Log.d(TAG, "handleSignInResult:personName "+personName);
-                Log.d(TAG, "handleSignInResult:personGivenName "+personGivenName);
-                Log.d(TAG, "handleSignInResult:personEmail "+personEmail);
-                Log.d(TAG, "handleSignInResult:personId "+personId);
-                Log.d(TAG, "handleSignInResult:personFamilyName "+personFamilyName);
-                Log.d(TAG, "handleSignInResult:personPhoto "+personPhoto);
+                Log.d(TAG, "handleSignInResult:personName " + personName);
+                Log.d(TAG, "handleSignInResult:personGivenName " + personGivenName);
+                Log.d(TAG, "handleSignInResult:personEmail " + personEmail);
+                Log.d(TAG, "handleSignInResult:personId " + personId);
+                Log.d(TAG, "handleSignInResult:personFamilyName " + personFamilyName);
+                Log.d(TAG, "handleSignInResult:personPhoto " + personPhoto);
 
                 AccountMail = personEmail;
                 AccountName = personName;
-                System.out.println("josh email = " +personEmail);
-                System.out.println("josh name  = " +personName);
+                System.out.println("josh email = " + personEmail);
+                System.out.println("josh name  = " + personName);
 
                 startActivity(new Intent(LiveSelectActivity.this, LiveSettingActivity.class)); //로딩이 끝난 후, ChoiceFunction 이동
                 overridePendingTransition(R.anim.fadein, R.anim.fadeout);

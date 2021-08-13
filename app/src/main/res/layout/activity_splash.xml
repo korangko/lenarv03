@@ -9,26 +9,25 @@
         android:id="@+id/imageView5"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/background"
+        android:background="@drawable/background2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:alpha="0.1"
+        android:src="@drawable/lenar2"
         android:scaleType="centerCrop"
-        android:src="@drawable/lenar1"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:alpha="0.1"/>
 
     <TextView
+        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/robotobold"
-        android:text="L E N A R"
+        android:fontFamily="@font/meticula"
+        android:text="Lenar"
         android:textColor="@color/white"
-        android:textSize="40dp"
+        android:textSize="50dp"
         app:layout_constraintBottom_toBottomOf="@+id/imageView5"
         app:layout_constraintEnd_toEndOf="@+id/imageView5"
         app:layout_constraintStart_toStartOf="parent"
@@ -39,7 +38,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
-        android:fontFamily="@font/robotolight"
+        android:fontFamily="@font/meticula"
         android:gravity="center"
         android:text="Copyright 2021. PINERA inc. all rights reserved."
         android:textColor="#595858"

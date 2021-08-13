@@ -22,9 +22,7 @@ public class MainMenuActivity extends Activity {
         setContentView(R.layout.activity_main_menu);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
-        graphicImage =findViewById(R.id.background_circle);
         scale = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.alpha);
-        graphicImage.startAnimation(scale);
 
     }
 

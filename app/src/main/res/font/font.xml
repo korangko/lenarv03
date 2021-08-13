@@ -7,7 +7,7 @@
     <font
         android:fontStyle = "normal"
         android:fontWeight = "400"
-        android:font = "@font/robotolight"/>
+        android:font = "@font/meticula"/>
     <font
         android:fontStyle = "normal"
         android:fontWeight = "400"
@@ -17,4 +17,16 @@
         android:fontStyle = "normal"
         android:fontWeight = "400"
         android:font = "@font/droidsans"/>
+    <font
+        android:fontStyle = "normal"
+        android:fontWeight = "400"
+        android:font = "@font/bronovabold"/>
+    <font
+        android:fontStyle = "normal"
+        android:fontWeight = "400"
+        android:font = "@font/bronovaregular"/>
+    <font
+        android:fontStyle = "normal"
+        android:fontWeight = "400"
+        android:font = "@font/meticula"/>
 </font-family>

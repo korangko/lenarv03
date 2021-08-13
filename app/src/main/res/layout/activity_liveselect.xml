@@ -6,10 +6,9 @@
     android:layout_height="match_parent">
 
     <ImageView
-        android:id="@+id/imageView5"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/background"
+        android:background="@drawable/background2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -21,23 +20,24 @@
         android:layout_marginStart="20dp"
         android:padding="10dp"
         android:src="@drawable/ic_before"
-        app:layout_constraintBottom_toBottomOf="@+id/textView14"
+        android:layout_marginTop="40dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView14" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView14"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="40dp"
         android:layout_marginTop="40dp"
-        android:fontFamily="@font/robotolight"
-        android:gravity="center"
-        android:text="SELECT PLATFORM"
+        android:fontFamily="@font/meticula"
+        android:gravity="start|center_vertical"
+        android:text="Choose Live Platform"
         android:textColor="@color/white"
         android:textSize="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/menu_before_btn"
         app:layout_constraintTop_toTopOf="parent" />
+
+
 
     <LinearLayout
         android:id="@+id/youtube_selectbtn"
@@ -47,7 +47,7 @@
         android:paddingHorizontal="25dp"
         app:layout_constraintBottom_toTopOf="@+id/facebook_selectbtn"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/imageView5">
+        app:layout_constraintStart_toStartOf="parent">
 
         <ImageView
             android:layout_width="35dp"
@@ -61,7 +61,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginStart="15dp"
-            android:fontFamily="@font/robotolight"
+            android:fontFamily="@font/meticula"
             android:text="Youtube"
             android:textColor="@color/white"
             android:textSize="15dp" />
@@ -76,7 +76,7 @@
         android:paddingHorizontal="25dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/imageView5"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
@@ -91,7 +91,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginStart="15dp"
-            android:fontFamily="@font/robotolight"
+            android:fontFamily="@font/meticula"
             android:text="FaceBook Live"
             android:textColor="@color/white"
             android:textSize="15dp" />
@@ -105,7 +105,7 @@
         android:orientation="horizontal"
         android:paddingHorizontal="25dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/imageView5"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/facebook_selectbtn">
 
         <ImageView
@@ -120,7 +120,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginStart="15dp"
-            android:fontFamily="@font/robotolight"
+            android:fontFamily="@font/meticula"
             android:text="Twitch"
             android:textColor="@color/white"
             android:textSize="15dp" />
@@ -131,21 +131,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
-        android:fontFamily="@font/robotolight"
+        android:fontFamily="@font/meticula"
         android:gravity="center"
         android:text="Copyright 2021. PINERA inc. all rights reserved."
         android:textColor="#595858"
         android:textSize="9dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <com.facebook.login.widget.LoginButton
-        android:id="@+id/login_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_marginBottom="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

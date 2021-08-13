@@ -20,7 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:fontFamily="@font/robotolight"
+        android:fontFamily="@font/meticula"
         android:gravity="center"
         android:text="Loading..." />
 </LinearLayout>

@@ -6,22 +6,13 @@
     android:layout_height="match_parent">
 
     <ImageView
-        android:id="@+id/imageView5"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/background"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
         android:id="@+id/imageView7"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="100dp"
-        android:background="@drawable/shape_color_roundsquare4"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="@drawable/background2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 
     <ImageView
         android:id="@+id/menu_before_btn"
@@ -36,16 +27,15 @@
 
     <TextView
         android:id="@+id/textView14"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="40dp"
         android:layout_marginTop="40dp"
-        android:fontFamily="@font/robotolight"
-        android:gravity="center"
-        android:text="STRAMING SETTING"
+        android:fontFamily="@font/meticula"
+        android:gravity="start|center_vertical"
+        android:text="Streaming setting"
         android:textColor="@color/white"
         android:textSize="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/menu_before_btn"
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
@@ -53,13 +43,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginTop="20dp"
-        app:layout_constraintTop_toTopOf="@+id/imageView7">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:id="@+id/logout_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             app:layout_constraintBottom_toTopOf="@+id/linearLayout"
             app:layout_constraintEnd_toEndOf="parent"
@@ -68,35 +58,49 @@
 
             <ImageView
                 android:id="@+id/google_account_image"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:scaleType="centerCrop"
+                android:layout_marginStart="30dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
+                android:layout_marginStart="20dp"
                 android:id="@+id/google_account_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:fontFamily="@font/robotolight"
+                android:fontFamily="@font/meticula"
                 android:gravity="center"
                 android:text="ID"
                 android:textColor="@color/white"
                 android:textSize="12dp"
-                android:layout_marginTop="10dp"
-                app:layout_constraintEnd_toEndOf="@+id/google_account_image"
-                app:layout_constraintStart_toStartOf="@+id/google_account_image"
-                app:layout_constraintTop_toBottomOf="@+id/google_account_image" />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/google_account_image"
+                app:layout_constraintTop_toTopOf="@+id/google_account_image" />
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="25dp"
+                android:background="@drawable/shape_color_roundsquare4"
+                android:fontFamily="@font/meticula"
+                android:gravity="center"
+                android:text="Log out"
+                android:textColor="@color/white"
+                android:textSize="12dp"
+                android:layout_marginEnd="25dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp">
+            android:layout_marginTop="15dp">
 
             <TextView
                 android:layout_width="0dp"
@@ -104,7 +108,7 @@
                 android:layout_gravity="center"
                 android:layout_marginStart="30dp"
                 android:layout_weight="1"
-                android:fontFamily="@font/robotolight"
+                android:fontFamily="@font/meticula"
                 android:gravity="start"
                 android:text="Title"
                 android:textColor="@color/white"
@@ -119,13 +123,13 @@
                 android:layout_weight="2"
                 android:background="@drawable/shape_color_roundsquare2"
                 android:cursorVisible="false"
-                android:fontFamily="@font/robotolight"
-                android:textSize="12dp"
+                android:fontFamily="@font/meticula"
                 android:gravity="center"
                 android:imeOptions="actionDone"
                 android:inputType="text"
                 android:maxLines="1"
                 android:textColor="@color/white"
+                android:textSize="12dp"
                 android:visibility="visible" />
         </LinearLayout>
 
@@ -140,7 +144,7 @@
                 android:layout_gravity="center"
                 android:layout_marginStart="30dp"
                 android:layout_weight="1"
-                android:fontFamily="@font/robotolight"
+                android:fontFamily="@font/meticula"
                 android:gravity="start"
                 android:text="Description"
                 android:textColor="@color/white"
@@ -155,13 +159,13 @@
                 android:layout_weight="2"
                 android:background="@drawable/shape_color_roundsquare2"
                 android:cursorVisible="false"
-                android:fontFamily="@font/robotolight"
+                android:fontFamily="@font/meticula"
                 android:gravity="center"
-                android:textSize="12dp"
                 android:imeOptions="actionDone"
                 android:inputType="text"
                 android:maxLines="1"
                 android:textColor="@color/white"
+                android:textSize="12dp"
                 android:visibility="visible" />
         </LinearLayout>
 
@@ -176,7 +180,7 @@
                 android:layout_gravity="center"
                 android:layout_marginStart="30dp"
                 android:layout_weight="3"
-                android:fontFamily="@font/robotolight"
+                android:fontFamily="@font/meticula"
                 android:gravity="start"
                 android:text="Resolution"
                 android:textColor="@color/white"
@@ -188,7 +192,7 @@
                 android:layout_marginEnd="25dp"
                 android:layout_weight="1"
                 android:background="@drawable/shape_color_roundsquare2"
-                android:fontFamily="@font/robotolight"
+                android:fontFamily="@font/meticula"
                 android:gravity="center"
                 android:text="1440P"
                 android:textColor="@color/white"
@@ -208,7 +212,7 @@
                 android:layout_gravity="center"
                 android:layout_marginStart="30dp"
                 android:layout_weight="3"
-                android:fontFamily="@font/robotolight"
+                android:fontFamily="@font/meticula"
                 android:gravity="start"
                 android:text="Bitrate"
                 android:textColor="@color/white"
@@ -220,7 +224,7 @@
                 android:layout_marginEnd="25dp"
                 android:layout_weight="1"
                 android:background="@drawable/shape_color_roundsquare2"
-                android:fontFamily="@font/robotolight"
+                android:fontFamily="@font/meticula"
                 android:gravity="center"
                 android:text="16M"
                 android:textColor="@color/white"
@@ -239,7 +243,7 @@
                 android:layout_gravity="center"
                 android:layout_marginStart="30dp"
                 android:layout_weight="5"
-                android:fontFamily="@font/robotolight"
+                android:fontFamily="@font/meticula"
                 android:gravity="start"
                 android:text="Private"
                 android:textColor="@color/white"
@@ -266,7 +270,7 @@
                 android:layout_gravity="center"
                 android:layout_marginStart="30dp"
                 android:layout_weight="5"
-                android:fontFamily="@font/robotolight"
+                android:fontFamily="@font/meticula"
                 android:gravity="start"
                 android:text="Kids content"
                 android:textColor="@color/white"
@@ -284,31 +288,21 @@
 
     </LinearLayout>
 
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <TextView
         android:id="@+id/live_set_btn"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginHorizontal="80dp"
-        android:layout_marginBottom="40dp"
-        android:background="@drawable/shape_color_roundsquare"
+        android:layout_width="200dp"
+        android:layout_height="40dp"
+        android:background="@drawable/shape_color_roundsquare4"
+        android:fontFamily="@font/meticula"
+        android:gravity="center"
+        android:onClick="live_btn_click"
+        android:text="Live Stream"
+        android:textColor="@color/white"
+        android:textSize="20dp"
+        android:layout_marginBottom="50dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-        tools:layout_editor_absoluteX="80dp">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
-        <TextView
-            android:id="@+id/textView11"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/fallingsky"
-            android:text="Go LIVE"
-            android:textColor="@color/white"
-            android:textSize="20dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

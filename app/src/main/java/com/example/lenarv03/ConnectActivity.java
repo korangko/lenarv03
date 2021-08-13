@@ -22,7 +22,7 @@ import static com.example.lenarv03.utils.WifiConnect.LenarConnected;
 public class ConnectActivity extends Activity {
 
     ImageView checkSign;
-    ConstraintLayout connectionFailLayout;
+    ConstraintLayout connectionFailLayout, connectingLayout, connectionSuccessLayout;
     SpinKitView loadingSignal;
     Animation fadeinAnim;
     TextView reconnectBtn;
@@ -39,6 +39,8 @@ public class ConnectActivity extends Activity {
         checkSign = findViewById(R.id.checksign);
         loadingSignal = findViewById(R.id.loading_signal);
         connectionFailLayout = findViewById(R.id.connection_fail_layout);
+        connectingLayout = findViewById(R.id.connecting_layout);
+        connectionSuccessLayout = findViewById(R.id.connection_success_layout);
         fadeinAnim = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fadein);
 
         ConnectingLenar nr = new ConnectingLenar() ;
@@ -48,8 +50,8 @@ public class ConnectActivity extends Activity {
     }
 
     public void reconnect_btn_click(View view) {
-        loadingSignal.setVisibility(View.VISIBLE);
         connectionFailLayout.setVisibility(View.GONE);
+        connectingLayout.setVisibility(View.VISIBLE);
         ConnectingLenar nr = new ConnectingLenar() ;
         Thread t = new Thread(nr) ;
         t.start() ;
@@ -73,9 +75,8 @@ public class ConnectActivity extends Activity {
             if(LenarConnected){
                 runOnUiThread(new Runnable() {
                     public void run() {
-                        loadingSignal.setVisibility(View.GONE);
-                        checkSign.startAnimation(fadeinAnim);
-                        checkSign.setVisibility(View.VISIBLE);
+                        connectingLayout.setVisibility(View.GONE);
+                        connectionSuccessLayout.setVisibility(View.VISIBLE);
                     }
                 });
                 Handler handler = new Handler(Looper.getMainLooper());
@@ -90,7 +91,7 @@ public class ConnectActivity extends Activity {
             }else{
                 runOnUiThread(new Runnable() {
                     public void run() {
-                        loadingSignal.setVisibility(View.GONE);
+                        connectingLayout.setVisibility(View.GONE);
                         connectionFailLayout.setVisibility(View.VISIBLE);
                     }
                 });
