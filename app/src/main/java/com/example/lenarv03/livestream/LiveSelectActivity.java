@@ -1,8 +1,12 @@
 package com.example.lenarv03.livestream;
 
+import android.accounts.AccountManager;
 import android.app.Activity;
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -11,39 +15,37 @@ import android.widget.LinearLayout;
 
 import com.example.lenarv03.MainMenuActivity;
 import com.example.lenarv03.R;
-import com.facebook.AccessToken;
-import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
-import com.facebook.FacebookSdk;
-import com.facebook.GraphRequest;
-import com.facebook.GraphResponse;
-import com.facebook.LoginStatusCallback;
-import com.facebook.login.LoginManager;
-import com.facebook.login.LoginResult;
-import com.facebook.login.widget.LoginButton;
+import com.example.lenarv03.utils.YouTubeApi;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
+import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException;
+import com.google.api.services.youtube.YouTube;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.Arrays;
 
 import static com.example.lenarv03.utils.YouTubeApi.AccountMail;
 import static com.example.lenarv03.utils.YouTubeApi.AccountName;
 import static com.example.lenarv03.utils.YouTubeApi.account;
+import static com.example.lenarv03.utils.YouTubeApi.credential;
 import static com.example.lenarv03.utils.YouTubeApi.mGoogleSignInClient;
 
 public class LiveSelectActivity extends Activity implements View.OnClickListener {
 
-    int RC_SIGN_IN = 5;
+    private static final int REQUEST_GOOGLE_PLAY_SERVICES = 0;
+    private static final int REQUEST_GMS_ERROR_DIALOG = 1;
+    private static final int REQUEST_ACCOUNT_PICKER = 2;
+    private static final int REQUEST_STREAMER = 4;
+    private static final int RC_SIGN_IN = 5;
     private static final String TAG = "Lenar TAG";
-    //facebook live
-    private CallbackManager callbackmanager;
+
 
 
     @Override
@@ -56,8 +58,6 @@ public class LiveSelectActivity extends Activity implements View.OnClickListener
         findViewById(R.id.youtube_selectbtn).setOnClickListener(this);
         findViewById(R.id.facebook_selectbtn).setOnClickListener(this);
         findViewById(R.id.twitch_selectbtn).setOnClickListener(this);
-
-        FacebookSdk.sdkInitialize(getApplicationContext());
 
     }
 
@@ -80,10 +80,7 @@ public class LiveSelectActivity extends Activity implements View.OnClickListener
                 }
                 break;
             case R.id.facebook_selectbtn:
-                AccessToken accessToken = AccessToken.getCurrentAccessToken();
-                boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
-                System.out.println("josh fb login = " + isLoggedIn);
-                Fblogin();
+
                 break;
             case R.id.twitch_selectbtn:
                 break;
@@ -104,77 +101,54 @@ public class LiveSelectActivity extends Activity implements View.OnClickListener
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
-    /**
-     * facebook Login
-     **/
-    private void Fblogin() {
-        callbackmanager = CallbackManager.Factory.create();
-
-        // Set permissions
-        LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("email", "user_photos", "public_profile"));
-
-        LoginManager.getInstance().registerCallback(callbackmanager,
-                new FacebookCallback<LoginResult>() {
-                    @Override
-                    public void onSuccess(LoginResult loginResult) {
-
-                        System.out.println("Success");
-                        GraphRequest.newMeRequest(
-                                loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
-                                    @Override
-                                    public void onCompleted(JSONObject json, GraphResponse response) {
-                                        if (response.getError() != null) {
-                                            // handle error
-                                            System.out.println("ERROR");
-                                        } else {
-                                            System.out.println("Success");
-                                            try {
-
-                                                String jsonresult = String.valueOf(json);
-                                                System.out.println("JSON Result" + jsonresult);
-
-                                                String str_email = json.getString("email");
-                                                String str_id = json.getString("id");
-                                                String str_firstname = json.getString("first_name");
-                                                String str_lastname = json.getString("last_name");
-
-                                            } catch (JSONException e) {
-                                                e.printStackTrace();
-                                            }
-                                        }
-                                    }
-
-                                }).executeAsync();
-
-                    }
-
-                    @Override
-                    public void onCancel() {
-//                        Log.d(TAG_CANCEL,"On cancel");
-                        System.out.println("On cancel");
-
-                    }
-
-                    @Override
-                    public void onError(FacebookException error) {
-//                        Log.d(TAG_ERROR,error.toString());
-                        System.out.println("facebook error log = "+ error);
-                    }
-                });
-    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
-        if (requestCode == RC_SIGN_IN) {
-            // The Task returned from this call is always completed, no need to attach
-            // a listener.
-            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-            handleSignInResult(task);
-        }else{
-            callbackmanager.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case RC_SIGN_IN:
+                System.out.println("josh 0");
+
+                Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+                handleSignInResult(task);
+                break;
+            case REQUEST_GMS_ERROR_DIALOG:
+                System.out.println("josh 1");
+
+                break;
+            case REQUEST_GOOGLE_PLAY_SERVICES:
+                System.out.println("josh 2");
+
+                if (resultCode == Activity.RESULT_OK) {
+                    haveGooglePlayServices();
+                } else {
+                    checkGooglePlayServicesAvailable();
+                }
+                break;
+            case REQUEST_ACCOUNT_PICKER:
+                System.out.println("josh 3");
+                if (resultCode == Activity.RESULT_OK && data != null
+                        && data.getExtras() != null) {
+                    String accountName = data.getExtras().getString(
+                            AccountManager.KEY_ACCOUNT_NAME);
+                    if (accountName != null) {
+                        credential.setSelectedAccountName(AccountMail);
+                    }
+                }
+                break;
+            case REQUEST_STREAMER:
+                System.out.println("josh 4");
+
+                if (resultCode == Activity.RESULT_OK && data != null
+                        && data.getExtras() != null) {
+                    String broadcastId = data.getStringExtra(YouTubeApi.BROADCAST_ID_KEY);
+                    if (broadcastId != null) {
+                        new EndEventTask().execute(broadcastId);
+                    }
+                }
+                break;
 
         }
     }
@@ -212,6 +186,56 @@ public class LiveSelectActivity extends Activity implements View.OnClickListener
             // Please refer to the GoogleSignInStatusCodes class reference for more information.
             Log.e(TAG, "signInResult:failed code=" + e.getStatusCode());
 
+        }
+    }
+    private void haveGooglePlayServices() {
+        // check if there is already an account selected
+        if (credential.getSelectedAccountName() == null) {
+            // ask user to choose account
+            chooseAccount();
+        }
+    }
+    private void chooseAccount() {
+        startActivityForResult(credential.newChooseAccountIntent(),
+                REQUEST_ACCOUNT_PICKER);
+    }
+    private boolean checkGooglePlayServicesAvailable() {
+        final int connectionStatusCode = GooglePlayServicesUtil
+                .isGooglePlayServicesAvailable(this);
+        if (GooglePlayServicesUtil.isUserRecoverableError(connectionStatusCode)) {
+            showGooglePlayServicesAvailabilityErrorDialog(connectionStatusCode);
+            return false;
+        }
+        return true;
+    }
+    public void showGooglePlayServicesAvailabilityErrorDialog(
+            final int connectionStatusCode) {
+        runOnUiThread(new Runnable() {
+            public void run() {
+                Dialog dialog = GooglePlayServicesUtil.getErrorDialog(
+                        connectionStatusCode, LiveSelectActivity.this,
+                        REQUEST_GOOGLE_PLAY_SERVICES);
+                dialog.show();
+            }
+        });
+    }
+    private class EndEventTask extends AsyncTask<String, Void, Void> {
+        private ProgressDialog progressDialog;
+
+        @Override
+        protected void onPreExecute() {
+
+        }
+
+        @Override
+        protected Void doInBackground(String... params) {
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void param) {
+            progressDialog.dismiss();
         }
     }
 

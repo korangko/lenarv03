@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 
 import com.example.lenarv03.utils.PermissionSupport;
 
-public class SplashActivity extends Activity {
+public class IntroActivity1 extends Activity {
 
     //permission check
     private PermissionSupport permission;
@@ -34,9 +34,9 @@ public class SplashActivity extends Activity {
 
     private class splashhandler implements Runnable {
         public void run() {
-            startActivity(new Intent(getApplication(), ConnectActivity.class)); //로딩이 끝난 후, ChoiceFunction 이동
+            startActivity(new Intent(getApplication(), IntroActivity2.class)); //로딩이 끝난 후, ChoiceFunction 이동
             overridePendingTransition(R.anim.fadein, R.anim.fadeout);
-            SplashActivity.this.finish(); // 로딩페이지 Activity stack에서 제거
+            IntroActivity1.this.finish(); // 로딩페이지 Activity stack에서 제거
         }
     }
 
@@ -85,9 +85,10 @@ public class SplashActivity extends Activity {
             permission = new PermissionSupport(this, this);
             if (!permission.checkPermission()) {
                 permission.requestPermission();
+            }else{
+                Handler hd = new Handler();
+                hd.postDelayed(new splashhandler(), 1000); // 1초 후에 hd handler 실행  3000ms = 3초
             }
-            Handler hd = new Handler();
-            hd.postDelayed(new splashhandler(), 1000); // 1초 후에 hd handler 실행  3000ms = 3초
         }
     }
 

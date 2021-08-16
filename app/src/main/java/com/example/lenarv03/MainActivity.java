@@ -3,7 +3,6 @@ package com.example.lenarv03;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.SurfaceTexture;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.TextureView;
@@ -21,6 +20,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.lenarv03.utils.CustomOrientationEventListener;
+import com.example.lenarv03.utils.PageAdapter;
 import com.example.lenarv03.utils.RtspReceiver;
 import com.google.android.material.tabs.TabLayout;
 

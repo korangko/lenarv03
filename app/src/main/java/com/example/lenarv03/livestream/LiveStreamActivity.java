@@ -45,6 +45,7 @@ public class LiveStreamActivity extends Activity implements View.OnClickListener
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         findViewById(R.id.live_start_btn).setOnClickListener(this);
+        findViewById(R.id.menu_before_btn).setOnClickListener(this);
 
 //        rtspReceiveView = findViewById(R.id.rtspReceiveView);
 //        rtspReceiveView.setSurfaceTextureListener(mSurfaceTextureListener);

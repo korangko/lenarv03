@@ -1,8 +1,12 @@
-package com.example.lenarv03;
+package com.example.lenarv03.utils;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
+
+import com.example.lenarv03.FragmentCapture;
+import com.example.lenarv03.FragmentTimelapse;
+import com.example.lenarv03.FragmentVideo;
 
 import java.util.ArrayList;
 import java.util.List;

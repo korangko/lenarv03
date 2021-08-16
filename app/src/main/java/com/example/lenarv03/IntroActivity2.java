@@ -19,7 +19,7 @@ import com.github.ybq.android.spinkit.SpinKitView;
 
 import static com.example.lenarv03.utils.WifiConnect.LenarConnected;
 
-public class ConnectActivity extends Activity {
+public class IntroActivity2 extends Activity {
 
     ImageView checkSign;
     ConstraintLayout connectionFailLayout, connectingLayout, connectionSuccessLayout;
@@ -63,9 +63,9 @@ public class ConnectActivity extends Activity {
             // connection wait till 6s and repeat 3 times
             for (int i = 0; i < 3; i++) {
                 long startTime = System.currentTimeMillis();
-                mWifiConnect.connectLenar(ConnectActivity.this);
+                mWifiConnect.connectLenar(IntroActivity2.this);
                 while((System.currentTimeMillis() - startTime) < 6000 && !LenarConnected) {
-                    mWifiConnect.connectionCheck(ConnectActivity.this);
+                    mWifiConnect.connectionCheck(IntroActivity2.this);
                 }
                 if(LenarConnected){
                     //if lenar is connected, breakout of for()
@@ -83,9 +83,9 @@ public class ConnectActivity extends Activity {
                         handler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                startActivity(new Intent(ConnectActivity.this, MainMenuActivity.class)); //로딩이 끝난 후, ChoiceFunction 이동
+                                startActivity(new Intent(IntroActivity2.this, MainMenuActivity.class)); //로딩이 끝난 후, ChoiceFunction 이동
                                 overridePendingTransition(R.anim.fadein, R.anim.fadeout);
-                                ConnectActivity.this.finish();
+                                IntroActivity2.this.finish();
                             }
                         }, 3000);
             }else{

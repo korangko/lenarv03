@@ -1,5 +1,6 @@
 package com.example.lenarv03.livestream;
 
+import android.accounts.AccountManager;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -25,6 +26,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
+import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException;
 import com.google.api.client.util.ExponentialBackOff;
 import com.google.api.services.youtube.YouTube;
 
@@ -53,6 +55,8 @@ public class LiveSettingActivity extends Activity implements View.OnClickListene
 
     // to log in to google account
     private static final String TAG = "Lenar App";
+    public static final int REQUEST_AUTHORIZATION = 3;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +65,6 @@ public class LiveSettingActivity extends Activity implements View.OnClickListene
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         mainContext = this;
-
         /**variables**/
         findViewById(R.id.menu_before_btn).setOnClickListener(this);
         findViewById(R.id.live_set_btn).setOnClickListener(this);
@@ -69,11 +72,9 @@ public class LiveSettingActivity extends Activity implements View.OnClickListene
         liveTitleText = findViewById(R.id.live_stream_title_text);
         liveDescText = findViewById(R.id.live_stream_desc_text);
         accountImage = findViewById(R.id.google_account_image);
-
         /**check box**/
         broadcastModeBox = findViewById(R.id.broadcast_mode_chkbox);
         kidContentBox = findViewById(R.id.kids_content_chkbox);
-
         /**Google account**/
         accountText = findViewById(R.id.google_account_text);
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -111,7 +112,6 @@ public class LiveSettingActivity extends Activity implements View.OnClickListene
                 .addOnCompleteListener(this, new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        System.out.println("josh logout");
                     }
                 });
     }
@@ -123,24 +123,20 @@ public class LiveSettingActivity extends Activity implements View.OnClickListene
             if (acct != null) {
                 String personName = acct.getDisplayName();
                 Uri personPhoto = acct.getPhotoUrl();
-
                 AccountMail = acct.getEmail();
                 AccountName = personName;
-                System.out.println("josh email = " + AccountMail);
-                System.out.println("josh name  = " + AccountName);
                 accountText.setText(AccountMail);
-                if(personPhoto == null){
+                if (personPhoto == null) {
                     Glide.with(this)
                             .load(R.drawable.default_profile_image)
                             .circleCrop()
                             .into(accountImage);
-                }else{
+                } else {
                     Glide.with(this)
                             .load(personPhoto)
                             .circleCrop()
                             .into(accountImage);
                 }
-
             } else {
                 Toast.makeText(this, "Log In First", Toast.LENGTH_LONG).show();
             }
@@ -148,17 +144,10 @@ public class LiveSettingActivity extends Activity implements View.OnClickListene
     }
 
     public class CreateYoutubeLive extends Thread {
-//        GoogleAccountCredential credential;
-//        HttpTransport transport = newCompatibleTransport();
-//        JsonFactory jsonFactory = new GsonFactory();
-
         @Override
         public void run() {
-
-            /** kid and private mode check**/
             forKids = (kidContentBox.isChecked()) ? true : false;
             broadcastPublic = (broadcastModeBox.isChecked()) ? "private" : "public";
-
             credential = GoogleAccountCredential.usingOAuth2(
                     getApplicationContext(), Arrays.asList(Utils.SCOPES));
             credential.setBackOff(new ExponentialBackOff());
@@ -167,27 +156,35 @@ public class LiveSettingActivity extends Activity implements View.OnClickListene
                     credential).setApplicationName(APP_NAME)
                     .build();
             String date = new Date().toString();
-            /** setting live stream name or default name and create live stream event **/
             if (liveTitleText.getText().toString().equals("") || liveTitleText.getText().toString() == null) {
-                System.out.println("no title is founded");
                 YouTubeApi.createLiveEvent(youtube, "Event - " + date,
                         "Live stream by " + AccountName);
             } else {
                 YouTubeApi.createLiveEvent(youtube, "Event - " + date,
                         liveTitleText.getText().toString());
             }
-            /**update live events on your channel **/
             try {
                 YouTubeApi.getLiveEvents(youtube);
+                // if getting live events action is successful, then move to next intent
+                startActivity(new Intent(LiveSettingActivity.this, LiveStreamActivity.class)); //로딩이 끝난 후, ChoiceFunction 이동
+                overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+                LiveSettingActivity.this.finish();
+            } catch (UserRecoverableAuthIOException e) {
+                // 이부분이 있어야지 Auth error 가 발생하지 않는다. (Auth가 할당되지 않았을때 물어보는 부분)
+                startActivityForResult(e.getIntent(), REQUEST_AUTHORIZATION);
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            startActivity(new Intent(LiveSettingActivity.this, LiveStreamActivity.class)); //로딩이 끝난 후, ChoiceFunction 이동
-            overridePendingTransition(R.anim.fadein, R.anim.fadeout);
-            LiveSettingActivity.this.finish();
-
         }
     }
 
-
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
+        switch (requestCode) {
+            case REQUEST_AUTHORIZATION:
+                break;
+        }
+    }
 }

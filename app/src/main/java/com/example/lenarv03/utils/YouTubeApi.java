@@ -22,6 +22,7 @@ import com.example.lenarv03.MainActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
+import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException;
 import com.google.api.client.googleapis.json.GoogleJsonResponseException;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.json.JsonFactory;
@@ -51,6 +52,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 
+import static com.example.lenarv03.livestream.LiveSettingActivity.REQUEST_AUTHORIZATION;
 import static com.google.api.client.extensions.android.http.AndroidHttp.newCompatibleTransport;
 
 
@@ -158,7 +160,6 @@ public class YouTubeApi {
 
             // Request is executed and bound broadcast is returned
             liveBroadcastBind.execute();
-
         } catch (GoogleJsonResponseException e) {
             System.err.println("GoogleJsonResponseException code: "
                     + e.getDetails().getCode() + " : "
