@@ -14,21 +14,17 @@
 
 package com.example.lenarv03.utils;
 
-import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
 
 import com.example.lenarv03.MainActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
-import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException;
 import com.google.api.client.googleapis.json.GoogleJsonResponseException;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.gson.GsonFactory;
 import com.google.api.client.util.DateTime;
-import com.google.api.client.util.ExponentialBackOff;
 import com.google.api.services.youtube.YouTube;
 import com.google.api.services.youtube.YouTube.LiveBroadcasts.Transition;
 import com.google.api.services.youtube.model.CdnSettings;
@@ -46,13 +42,11 @@ import com.google.api.services.youtube.model.MonitorStreamInfo;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 
-import static com.example.lenarv03.livestream.LiveSettingActivity.REQUEST_AUTHORIZATION;
 import static com.google.api.client.extensions.android.http.AndroidHttp.newCompatibleTransport;
 
 

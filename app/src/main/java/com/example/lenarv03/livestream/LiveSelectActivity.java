@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.LinearLayout;
 
 import com.example.lenarv03.MainMenuActivity;
 import com.example.lenarv03.R;
@@ -22,15 +21,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
-import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException;
-import com.google.api.services.youtube.YouTube;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
-import java.util.Arrays;
-
+import static com.example.lenarv03.livestream.YtbSettingActivity2.REQUEST_AUTHORIZATION;
 import static com.example.lenarv03.utils.YouTubeApi.AccountMail;
 import static com.example.lenarv03.utils.YouTubeApi.AccountName;
 import static com.example.lenarv03.utils.YouTubeApi.account;
@@ -72,10 +64,12 @@ public class LiveSelectActivity extends Activity implements View.OnClickListener
                 mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
                 account = GoogleSignIn.getLastSignedInAccount(this);
                 if (account != null) {
-                    startActivity(new Intent(LiveSelectActivity.this, LiveSettingActivity.class)); //로딩이 끝난 후, ChoiceFunction 이동
+                    System.out.println("josh account  not null");
+                    startActivity(new Intent(LiveSelectActivity.this, YtbSettingActivitiy1.class)); //로딩이 끝난 후, ChoiceFunction 이동
                     overridePendingTransition(R.anim.fadein, R.anim.fadeout);
                     LiveSelectActivity.this.finish();
                 } else {
+                    System.out.println("josh account null");
                     signIn();
                 }
                 break;
@@ -150,6 +144,9 @@ public class LiveSelectActivity extends Activity implements View.OnClickListener
                 }
                 break;
 
+            case REQUEST_AUTHORIZATION:
+                break;
+
         }
     }
 
@@ -177,7 +174,7 @@ public class LiveSelectActivity extends Activity implements View.OnClickListener
                 System.out.println("josh email = " + personEmail);
                 System.out.println("josh name  = " + personName);
 
-                startActivity(new Intent(LiveSelectActivity.this, LiveSettingActivity.class)); //로딩이 끝난 후, ChoiceFunction 이동
+                startActivity(new Intent(LiveSelectActivity.this, YtbSettingActivity2.class)); //로딩이 끝난 후, ChoiceFunction 이동
                 overridePendingTransition(R.anim.fadein, R.anim.fadeout);
                 LiveSelectActivity.this.finish();
             }

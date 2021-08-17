@@ -1,6 +1,5 @@
 package com.example.lenarv03.livestream;
 
-import android.accounts.AccountManager;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -45,7 +44,7 @@ import static com.example.lenarv03.utils.YouTubeApi.mGoogleSignInClient;
 import static com.example.lenarv03.utils.YouTubeApi.transport;
 
 
-public class LiveSettingActivity extends Activity implements View.OnClickListener {
+public class YtbSettingActivity2 extends Activity implements View.OnClickListener {
 
     Context mainContext;
     TextView accountText;
@@ -61,7 +60,7 @@ public class LiveSettingActivity extends Activity implements View.OnClickListene
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_live_setting);
+        setContentView(R.layout.activity_ytb_setting2);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         mainContext = this;
@@ -89,9 +88,9 @@ public class LiveSettingActivity extends Activity implements View.OnClickListene
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.menu_before_btn:
-                startActivity(new Intent(LiveSettingActivity.this, LiveSelectActivity.class)); //로딩이 끝난 후, ChoiceFunction 이동
+                startActivity(new Intent(YtbSettingActivity2.this, LiveSelectActivity.class)); //로딩이 끝난 후, ChoiceFunction 이동
                 overridePendingTransition(R.anim.fadein, R.anim.fadeout);
-                LiveSettingActivity.this.finish();
+                YtbSettingActivity2.this.finish();
                 break;
             case R.id.live_set_btn:
                 CreateYoutubeLive livethread = new CreateYoutubeLive();
@@ -99,9 +98,9 @@ public class LiveSettingActivity extends Activity implements View.OnClickListene
                 break;
             case R.id.logout_btn:
                 signOut();
-                startActivity(new Intent(LiveSettingActivity.this, LiveSelectActivity.class)); //로딩이 끝난 후, ChoiceFunction 이동
+                startActivity(new Intent(YtbSettingActivity2.this, LiveSelectActivity.class)); //로딩이 끝난 후, ChoiceFunction 이동
                 overridePendingTransition(R.anim.fadein, R.anim.fadeout);
-                LiveSettingActivity.this.finish();
+                YtbSettingActivity2.this.finish();
                 break;
         }
 
@@ -166,9 +165,9 @@ public class LiveSettingActivity extends Activity implements View.OnClickListene
             try {
                 YouTubeApi.getLiveEvents(youtube);
                 // if getting live events action is successful, then move to next intent
-                startActivity(new Intent(LiveSettingActivity.this, LiveStreamActivity.class)); //로딩이 끝난 후, ChoiceFunction 이동
+                startActivity(new Intent(YtbSettingActivity2.this, LiveStreamActivity.class)); //로딩이 끝난 후, ChoiceFunction 이동
                 overridePendingTransition(R.anim.fadein, R.anim.fadeout);
-                LiveSettingActivity.this.finish();
+                YtbSettingActivity2.this.finish();
             } catch (UserRecoverableAuthIOException e) {
                 // 이부분이 있어야지 Auth error 가 발생하지 않는다. (Auth가 할당되지 않았을때 물어보는 부분)
                 startActivityForResult(e.getIntent(), REQUEST_AUTHORIZATION);
