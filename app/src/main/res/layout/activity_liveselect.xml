@@ -12,6 +12,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_special1"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
 
     <ImageView
         android:id="@+id/menu_before_btn"
@@ -31,36 +37,51 @@
         android:layout_marginTop="40dp"
         android:fontFamily="@font/meticula"
         android:gravity="start|center_vertical"
-        android:text="Choose Live Platform"
+        android:text="Live Platform"
         android:textColor="@color/white"
         android:textSize="16dp"
         app:layout_constraintStart_toEndOf="@+id/menu_before_btn"
         app:layout_constraintTop_toTopOf="parent" />
 
-
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_marginBottom="20dp"
+        android:fontFamily="@font/meticula"
+        android:gravity="center"
+        android:lineSpacingExtra="10dp"
+        android:text="Select an Online Video Platform"
+        android:textColor="@color/white"
+        android:textSize="14dp"
+        app:layout_constraintBottom_toTopOf="@+id/youtube_selectbtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <LinearLayout
         android:id="@+id/youtube_selectbtn"
-        android:layout_width="250dp"
-        android:layout_height="80dp"
-        android:orientation="horizontal"
-        android:paddingHorizontal="25dp"
+        android:layout_width="200dp"
+        android:layout_height="100dp"
+        android:orientation="vertical"
+        android:layout_marginBottom="30dp"
+        android:padding="10dp"
         app:layout_constraintBottom_toTopOf="@+id/facebook_selectbtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
         <ImageView
+            android:layout_weight="1"
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:layout_gravity="center"
-            android:layout_marginStart="20dp"
             android:src="@drawable/ico_youtube" />
 
         <TextView
+            android:layout_weight="1.5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginStart="15dp"
+            android:gravity="center"
             android:fontFamily="@font/meticula"
             android:text="Youtube"
             android:textColor="@color/white"
@@ -69,28 +90,29 @@
 
     <LinearLayout
         android:id="@+id/facebook_selectbtn"
-        android:layout_width="250dp"
-        android:layout_height="80dp"
+        android:layout_width="200dp"
+        android:layout_height="100dp"
         android:onClick="youtube_selectbtn_click"
-        android:orientation="horizontal"
-        android:paddingHorizontal="25dp"
+        android:orientation="vertical"
+        android:padding="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
+            android:layout_weight="1"
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:layout_gravity="center"
-            android:layout_marginStart="20dp"
             android:src="@drawable/ico_facebook" />
 
         <TextView
+            android:layout_weight="1.5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginStart="15dp"
+            android:gravity="center"
             android:fontFamily="@font/meticula"
             android:text="FaceBook Live"
             android:textColor="@color/white"
@@ -99,27 +121,29 @@
 
     <LinearLayout
         android:id="@+id/twitch_selectbtn"
-        android:layout_width="250dp"
-        android:layout_height="80dp"
+        android:layout_width="200dp"
+        android:layout_height="100dp"
         android:onClick="youtube_selectbtn_click"
-        android:orientation="horizontal"
-        android:paddingHorizontal="25dp"
+        android:orientation="vertical"
+        android:layout_marginTop="30dp"
+        android:padding="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/facebook_selectbtn">
 
         <ImageView
+            android:layout_weight="1"
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:layout_gravity="center"
-            android:layout_marginStart="20dp"
             android:src="@drawable/ico_twitch" />
 
         <TextView
+            android:layout_weight="1.5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginStart="15dp"
+            android:gravity="center"
             android:fontFamily="@font/meticula"
             android:text="Twitch"
             android:textColor="@color/white"

@@ -174,7 +174,7 @@ public class LiveSelectActivity extends Activity implements View.OnClickListener
                 System.out.println("josh email = " + personEmail);
                 System.out.println("josh name  = " + personName);
 
-                startActivity(new Intent(LiveSelectActivity.this, YtbSettingActivity2.class)); //로딩이 끝난 후, ChoiceFunction 이동
+                startActivity(new Intent(LiveSelectActivity.this, YtbSettingActivitiy1.class)); //로딩이 끝난 후, ChoiceFunction 이동
                 overridePendingTransition(R.anim.fadein, R.anim.fadeout);
                 LiveSelectActivity.this.finish();
             }

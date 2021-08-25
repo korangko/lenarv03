@@ -12,6 +12,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+
     <ImageView
         android:id="@+id/menu_before_btn"
         android:layout_width="40dp"
@@ -36,10 +37,27 @@
         app:layout_constraintStart_toEndOf="@+id/menu_before_btn"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/meticula"
+        android:gravity="center"
+        android:lineSpacingExtra="10dp"
+        android:text="Your Google account is"
+        android:textColor="@color/white"
+        android:textSize="14dp"
+        android:layout_marginBottom="40dp"
+        app:layout_constraintBottom_toTopOf="@+id/google_account_image"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <ImageView
         android:id="@+id/google_account_image"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="115dp"
+        android:layout_height="115dp"
+        android:padding="5dp"
+        app:layout_constraintVertical_bias="0.4"
+        android:background="@drawable/shape_circle3"
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -51,14 +69,58 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_marginTop="10dp"
         android:fontFamily="@font/meticula"
         android:gravity="center"
         android:text="ID"
         android:textColor="@color/white"
-        android:textSize="20dp"
-        android:layout_marginTop="10dp"
+        android:textSize="12dp"
         app:layout_constraintEnd_toEndOf="@+id/google_account_image"
         app:layout_constraintStart_toStartOf="@+id/google_account_image"
         app:layout_constraintTop_toBottomOf="@+id/google_account_image" />
+
+    <TextView
+        android:id="@+id/ok_btn"
+        android:layout_width="200dp"
+        android:layout_height="40dp"
+        android:background="@drawable/shape_color_roundsquare3"
+        android:fontFamily="@font/meticula"
+        android:gravity="center"
+        android:text="Ok"
+        android:textColor="#3C4A61"
+        android:textSize="14dp"
+        android:layout_marginTop="40dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/google_account_text" />
+
+    <TextView
+        android:id="@+id/not_ok_btn"
+        android:layout_width="200dp"
+        android:layout_height="40dp"
+        android:background="@drawable/shape_color_roundsquare4"
+        android:fontFamily="@font/meticula"
+        android:layout_marginTop="30dp"
+        android:gravity="center"
+        android:text="Sign out"
+        android:textColor="@color/white"
+        android:textSize="14dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ok_btn" />
+
+    <TextView
+        android:id="@+id/textView100"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:fontFamily="@font/meticula"
+        android:gravity="center"
+        android:text="Copyright 2021. PINERA inc. all rights reserved."
+        android:textColor="#595858"
+        android:textSize="9dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

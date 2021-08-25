@@ -6,10 +6,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <ImageView
-        android:id="@+id/imageView5"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/background"
+        android:background="@drawable/background2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -42,7 +41,7 @@
         android:layout_height="50dp"
         android:layout_marginHorizontal="80dp"
         android:layout_marginBottom="40dp"
-        android:background="@drawable/shape_color_roundsquare"
+        android:background="@drawable/shape_color_roundsquare5"
         app:layout_constraintBottom_toBottomOf="parent"
         tools:layout_editor_absoluteX="80dp">
 
@@ -50,10 +49,10 @@
             android:id="@+id/textView11"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/fallingsky"
-            android:text="Go LIVE"
+            android:fontFamily="@font/meticula"
+            android:text="Start Live stream"
             android:textColor="@color/white"
-            android:textSize="20dp"
+            android:textSize="14dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

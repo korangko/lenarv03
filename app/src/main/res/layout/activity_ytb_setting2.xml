@@ -38,11 +38,37 @@
         app:layout_constraintStart_toEndOf="@+id/menu_before_btn"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageView
+        android:id="@+id/imageView10"
+        android:layout_width="22dp"
+        android:layout_height="22dp"
+        android:layout_gravity="center"
+        android:src="@drawable/ico_youtube"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView4"
+        app:layout_constraintEnd_toStartOf="@+id/textView4"
+        app:layout_constraintTop_toTopOf="@+id/textView4" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:fontFamily="@font/meticula"
+        android:gravity="start|center_vertical"
+        android:text="Youtube"
+        android:textColor="@color/white"
+        android:textSize="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="@+id/linearLayout"
+        app:layout_constraintStart_toStartOf="@+id/linearLayout"
+        app:layout_constraintTop_toBottomOf="@+id/textView14" />
+
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:layout_marginHorizontal="25dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -63,46 +89,18 @@
                 android:textColor="@color/white"
                 android:textSize="12dp" />
 
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/logout_btn"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="2"
-                android:layout_marginEnd="25dp"
-                app:layout_constraintBottom_toTopOf="@+id/linearLayout"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView14">
-
-                <ImageView
-                    android:id="@+id/google_account_image"
-                    android:layout_width="23dp"
-                    android:layout_height="23dp"
-                    android:scaleType="centerCrop"
-                    android:layout_marginStart="5dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
                 <TextView
-                    android:layout_marginStart="20dp"
                     android:id="@+id/google_account_text"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:layout_weight="2"
                     android:fontFamily="@font/meticula"
                     android:gravity="center"
+                    android:layout_marginEnd="25dp"
                     android:text="ID"
                     android:textColor="@color/white"
-                    android:textSize="12dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/google_account_image"
-                    app:layout_constraintTop_toTopOf="@+id/google_account_image" />
-
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                    android:textSize="12dp" />
 
         </LinearLayout>
 
@@ -301,14 +299,56 @@
         android:id="@+id/live_set_btn"
         android:layout_width="200dp"
         android:layout_height="40dp"
+        android:layout_marginBottom="50dp"
         android:background="@drawable/shape_color_roundsquare4"
         android:fontFamily="@font/meticula"
         android:gravity="center"
-        android:onClick="live_btn_click"
-        android:text="Live Stream"
+        android:text="Go Live"
         android:textColor="@color/white"
-        android:textSize="20dp"
+        android:textSize="14dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/live_set_btn2"
+        android:visibility="gone"
+        android:layout_width="200dp"
+        android:layout_height="40dp"
         android:layout_marginBottom="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:background="@drawable/shape_color_roundsquare5"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+
+        <com.github.ybq.android.spinkit.SpinKitView
+            android:id="@+id/loading_signal"
+            style="@style/SpinKitView.Circle"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_gravity="center"
+            android:visibility="visible"
+            app:SpinKit_Color="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/textView100"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:fontFamily="@font/meticula"
+        android:gravity="center"
+        android:text="Copyright 2021. PINERA inc. all rights reserved."
+        android:textColor="#595858"
+        android:textSize="9dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

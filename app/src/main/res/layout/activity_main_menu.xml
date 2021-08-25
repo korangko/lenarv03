@@ -7,11 +7,20 @@
     android:layout_height="match_parent">
 
     <ImageView
+        android:id="@+id/imageView8"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/background2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/shape_special1"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
     <ImageView
         android:id="@+id/imageView6"
@@ -47,9 +56,9 @@
         android:gravity="center"
         android:text="Record"
         android:textColor="#3C4A61"
-        android:textSize="20dp"
+        android:textSize="14dp"
         android:onClick="video_btn_click"
-        app:layout_constraintVertical_bias="0.7"
+        app:layout_constraintVertical_bias="0.65"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -65,7 +74,7 @@
         android:gravity="center"
         android:text="Live Stream"
         android:textColor="@color/white"
-        android:textSize="20dp"
+        android:textSize="14dp"
         android:onClick="live_btn_click"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

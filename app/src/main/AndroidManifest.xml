@@ -30,7 +30,7 @@
         <activity android:name=".MainMenuActivity"/>
         <activity android:name=".SettingActivity"/>
         <activity android:name=".livestream.LiveSelectActivity"/>
-        <activity android:name=".livestream.YtbSettingActivity1"/>
+        <activity android:name=".livestream.YtbSettingActivitiy1"/>
         <activity android:name=".livestream.YtbSettingActivity2"/>
         <activity android:name=".livestream.LiveStreamActivity"/>
         <activity android:name=".MainActivity"
