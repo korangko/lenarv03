@@ -14,6 +14,8 @@ import android.view.WindowManager;
 
 import com.example.lenarv03.MainMenuActivity;
 import com.example.lenarv03.R;
+import com.example.lenarv03.utils.RtmpSender;
+import com.example.lenarv03.utils.RtmpSender2;
 import com.example.lenarv03.utils.YouTubeApi;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -26,6 +28,7 @@ import static com.example.lenarv03.livestream.YtbSettingActivity2.REQUEST_AUTHOR
 import static com.example.lenarv03.utils.YouTubeApi.AccountMail;
 import static com.example.lenarv03.utils.YouTubeApi.AccountName;
 import static com.example.lenarv03.utils.YouTubeApi.account;
+import static com.example.lenarv03.utils.YouTubeApi.broadCastingUrl;
 import static com.example.lenarv03.utils.YouTubeApi.credential;
 import static com.example.lenarv03.utils.YouTubeApi.mGoogleSignInClient;
 
@@ -37,6 +40,9 @@ public class LiveSelectActivity extends Activity implements View.OnClickListener
     private static final int REQUEST_STREAMER = 4;
     private static final int RC_SIGN_IN = 5;
     private static final String TAG = "Lenar TAG";
+    RtmpSender2 mRtmpsender2 = new RtmpSender2();
+    //test
+    public String broadCastingUrl2 ="rtmp://live-sel.twitch.tv/app/live_586002078_LBVa6QJiQjfXqic4FAQyFMb5eoBRtR";
 
 
 
@@ -77,6 +83,7 @@ public class LiveSelectActivity extends Activity implements View.OnClickListener
 
                 break;
             case R.id.twitch_selectbtn:
+                mRtmpsender2.broadcastStart(LiveSelectActivity.this);
                 break;
 
             case R.id.menu_before_btn:

@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="200dp"
-    android:layout_height="25dp"
-    android:background="@drawable/shape_roundsquare">
+    android:layout_height="25dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -24,7 +23,7 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="50ms"
+            android:text="75ms"
             android:textColor="@color/white"
             android:fontFamily="@font/meticula"
             android:textSize="12dp"/>
@@ -43,7 +42,7 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="90%"
+            android:text="98%"
             android:textColor="@color/white"
             android:fontFamily="@font/meticula"
             android:textSize="12dp"/>

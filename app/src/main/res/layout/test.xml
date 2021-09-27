@@ -7,7 +7,7 @@
     android:layout_height="match_parent">
 
     <ImageView
-        android:id="@+id/imageView5"
+        android:id="@+id/imageView8"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/background2"
@@ -15,61 +15,90 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/imageView6"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
+        android:id="@+id/google_account_image"
+        android:layout_width="320dp"
+        android:layout_height="320dp"
+        android:background="@drawable/shape_circle3"
+        android:padding="5dp"
+        app:layout_constraintBottom_toBottomOf="@+id/live_select_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textView8"
+        app:layout_constraintVertical_bias="0.4" />
+
+    <ImageView
+        android:id="@+id/lenar_pic"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:src="@drawable/lenar3"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.543"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.4" />
+        app:layout_constraintVertical_bias="0.23" />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/bronovaregular"
+        android:gravity="start"
+        android:lineSpacingExtra="30dp"
+        android:text="Lenar"
+        android:textColor="@color/white"
+        android:textSize="55dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageView8"
+        app:layout_constraintVertical_bias="0.472" />
 
     <TextView
         android:id="@+id/textView9"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="20dp"
         android:fontFamily="@font/meticula"
-        android:gravity="start|center"
-        android:text="Mode"
+        android:gravity="center"
+        android:text="Choose your video mode"
         android:textColor="@color/white"
-        android:textSize="25dp"
-        android:layout_marginBottom="40dp"
-        app:layout_constraintBottom_toTopOf="@+id/imageView6"
+        android:textSize="15dp"
+        android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
     <TextView
         android:id="@+id/video_select_btn"
-        android:layout_width="200dp"
+        android:layout_width="150dp"
         android:layout_height="40dp"
         android:background="@drawable/shape_color_roundsquare3"
         android:fontFamily="@font/meticula"
         android:gravity="center"
+        android:onClick="video_btn_click"
         android:text="Record"
         android:textColor="#3C4A61"
-        android:textSize="20dp"
-        app:layout_constraintVertical_bias="0.7"
+        android:textSize="14dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/textView9"
+        app:layout_constraintVertical_bias="0.142" />
 
     <TextView
         android:id="@+id/live_select_btn"
-        android:layout_width="200dp"
+        android:layout_width="150dp"
         android:layout_height="40dp"
+        android:layout_marginTop="30dp"
         android:background="@drawable/shape_color_roundsquare4"
         android:fontFamily="@font/meticula"
-        android:layout_marginTop="30dp"
         android:gravity="center"
+        android:onClick="live_btn_click"
         android:text="Live Stream"
         android:textColor="@color/white"
-        android:textSize="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:textSize="14dp"
+        app:layout_constraintEnd_toEndOf="@+id/video_select_btn"
+        app:layout_constraintStart_toStartOf="@+id/video_select_btn"
         app:layout_constraintTop_toBottomOf="@+id/video_select_btn" />
 
 
@@ -86,9 +115,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-
-
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

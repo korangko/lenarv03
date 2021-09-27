@@ -80,7 +80,8 @@ public class LiveStreamActivity extends Activity implements View.OnClickListener
             YouTube youtube = new YouTube.Builder(transport, jsonFactory,
                     credential).setApplicationName(APP_NAME)
                     .build();
-            mRtmpsender.broadcastStart(LiveStreamActivity.this, broadCastingUrl);
+//            mRtmpsender.broadcastStart(LiveStreamActivity.this, broadCastingUrl);
+            mRtmpsender.broadcastStart2(LiveStreamActivity.this, broadCastingUrl);
             String broadcId = currentEvent.getId();
             /** start live event **/
             try {

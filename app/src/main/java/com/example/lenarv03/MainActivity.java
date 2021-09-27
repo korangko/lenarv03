@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     //rtsp receive variables
     public static MediaPlayer mMediaPlayer = null;
     RtspReceiver mRtspReceiver = new RtspReceiver();
-    static public String url = "rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mov";
+    static public String url = "rtsp://demo:demo@ipvmdemo.dyndns.org:5541/onvif-media/media.amp?profile=profile_1_h264&sessiontimeout=60&streamtype=unicast";
     //loading layout
     static public LinearLayout loadingLayout;
     static public TextView loadingPercentage;
@@ -157,7 +157,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
                     viewWidth = width;
                     viewHeight = height;
-//                    mRtspReceiver.createPlayer(MainActivity.this, url, rtspReceiveView, height, width);
+                    mRtspReceiver.createPlayer(MainActivity.this, url, rtspReceiveView, height, width);
                 }
 
                 @Override

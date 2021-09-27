@@ -13,13 +13,6 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/shape_special1"
-        app:layout_constraintBottom_toBottomOf="parent" />
-
-
-    <ImageView
         android:id="@+id/menu_before_btn"
         android:layout_width="40dp"
         android:layout_height="40dp"

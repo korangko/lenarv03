@@ -36,6 +36,7 @@ import java.util.Date;
 import static com.example.lenarv03.MainActivity.APP_NAME;
 import static com.example.lenarv03.utils.YouTubeApi.AccountMail;
 import static com.example.lenarv03.utils.YouTubeApi.AccountName;
+import static com.example.lenarv03.utils.YouTubeApi.broadCastingUrl;
 import static com.example.lenarv03.utils.YouTubeApi.broadcastPublic;
 import static com.example.lenarv03.utils.YouTubeApi.credential;
 import static com.example.lenarv03.utils.YouTubeApi.forKids;
@@ -99,8 +100,8 @@ public class YtbSettingActivity2 extends Activity implements View.OnClickListene
                 YtbSettingActivity2.this.finish();
                 break;
             case R.id.live_set_btn:
-                liveSetBtn.setVisibility(View.GONE);
-                liveSetBtn2.setVisibility(View.VISIBLE);
+//                liveSetBtn.setVisibility(View.GONE);
+//                liveSetBtn2.setVisibility(View.VISIBLE);
                 CreateYoutubeLive livethread = new CreateYoutubeLive();
                 livethread.start();
                 break;
@@ -124,17 +125,18 @@ public class YtbSettingActivity2 extends Activity implements View.OnClickListene
     public class CreateYoutubeLive extends Thread {
         @Override
         public void run() {
-            while(!authConfirm) {
-                forKids = (kidContentBox.isChecked()) ? true : false;
-                broadcastPublic = (broadcastModeBox.isChecked()) ? "private" : "public";
-                credential = GoogleAccountCredential.usingOAuth2(
-                        getApplicationContext(), Arrays.asList(Utils.SCOPES));
-                credential.setBackOff(new ExponentialBackOff());
-                credential.setSelectedAccountName(AccountMail);
-                YouTube youtube = new YouTube.Builder(transport, jsonFactory,
-                        credential).setApplicationName(APP_NAME)
-                        .build();
-                String date = new Date().toString();
+            forKids = (kidContentBox.isChecked()) ? true : false;
+            broadcastPublic = (broadcastModeBox.isChecked()) ? "private" : "public";
+            credential = GoogleAccountCredential.usingOAuth2(
+                    getApplicationContext(), Arrays.asList(Utils.SCOPES));
+            credential.setBackOff(new ExponentialBackOff());
+            credential.setSelectedAccountName(AccountMail);
+            YouTube youtube = new YouTube.Builder(transport, jsonFactory,
+                    credential).setApplicationName(APP_NAME)
+                    .build();
+            String date = new Date().toString();
+
+            try {
                 if (liveTitleText.getText().toString().equals("") || liveTitleText.getText().toString() == null) {
                     YouTubeApi.createLiveEvent(youtube, "Event - " + date,
                             "Live stream by " + AccountName);
@@ -142,25 +144,25 @@ public class YtbSettingActivity2 extends Activity implements View.OnClickListene
                     YouTubeApi.createLiveEvent(youtube, "Event - " + date,
                             liveTitleText.getText().toString());
                 }
-                try {
-                    YouTubeApi.getLiveEvents(youtube);
-                    Thread.sleep(500);
-                    // if okay with getting live info then -> authconfirm - ok - > next intent
-                    authConfirm = true;
-                } catch (UserRecoverableAuthIOException e) {
-                    // 이부분이 있어야지 Auth error 가 발생하지 않는다. (Auth가 할당되지 않았을때 물어보는 부분)
-                    startActivityForResult(e.getIntent(), REQUEST_AUTHORIZATION);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (InterruptedException e) {
-                    System.out.println("josh interrupted");
-                    e.printStackTrace();
-                }
+                YouTubeApi.getLiveEvents(youtube);
+                Thread.sleep(500);
+                // if okay with getting live info then -> authconfirm - ok - > next intent
+                authConfirm = true;
+            } catch (UserRecoverableAuthIOException e) {
+                // 이부분이 있어야지 Auth error 가 발생하지 않는다. (Auth가 할당되지 않았을때 물어보는 부분)
+                startActivityForResult(e.getIntent(), REQUEST_AUTHORIZATION);
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                System.out.println("josh interrupted");
+                e.printStackTrace();
             }
             // if getting live events action is successful, then move to next intent
-            startActivity(new Intent(YtbSettingActivity2.this, LiveStreamActivity.class)); //로딩이 끝난 후, ChoiceFunction 이동
-            overridePendingTransition(R.anim.fadein, R.anim.fadeout);
-            YtbSettingActivity2.this.finish();
+            if(authConfirm) {
+                startActivity(new Intent(YtbSettingActivity2.this, LiveStreamActivity.class)); //로딩이 끝난 후, ChoiceFunction 이동
+                overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+                YtbSettingActivity2.this.finish();
+            }
         }
     }
 
