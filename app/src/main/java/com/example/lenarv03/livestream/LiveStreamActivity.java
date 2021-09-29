@@ -24,6 +24,7 @@ import com.google.api.services.youtube.YouTube;
 import java.io.IOException;
 
 import static com.example.lenarv03.MainActivity.APP_NAME;
+import static com.example.lenarv03.MainActivity.url;
 import static com.example.lenarv03.utils.RtspReceiver.vout;
 import static com.example.lenarv03.utils.YouTubeApi.broadCastingUrl;
 import static com.example.lenarv03.utils.YouTubeApi.credential;
@@ -33,9 +34,12 @@ import static com.example.lenarv03.utils.YouTubeApi.transport;
 
 public class LiveStreamActivity extends Activity implements View.OnClickListener {
 
+    ConstraintLayout liveStartBtn, liveStopBtn;
     RtspReceiver mRtspReceiver = new RtspReceiver();
     RtmpSender mRtmpsender = new RtmpSender();
     TextureView rtspReceiveView;
+    int viewWidth, viewHeight;
+    boolean liveActivated = false;
     final int REQUEST_AUTHORIZATION = 3;
 
     @Override
@@ -44,13 +48,18 @@ public class LiveStreamActivity extends Activity implements View.OnClickListener
         setContentView(R.layout.activity_livestream);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
+        liveStartBtn = findViewById(R.id.live_start_btn);
+        liveStopBtn = findViewById(R.id.live_stop_btn);
+
         findViewById(R.id.live_start_btn).setOnClickListener(this);
+        findViewById(R.id.live_stop_btn).setOnClickListener(this);
+        findViewById(R.id.live_quit_btn).setOnClickListener(this);
         findViewById(R.id.menu_before_btn).setOnClickListener(this);
 
-//        rtspReceiveView = findViewById(R.id.rtspReceiveView);
-//        rtspReceiveView.setSurfaceTextureListener(mSurfaceTextureListener);
+        rtspReceiveView = findViewById(R.id.rtspReceiveView);
+        rtspReceiveView.setSurfaceTextureListener(mSurfaceTextureListener);
 
-//        monitorViewSizeChange(rtspReceiveView, 1.5, true);
+        monitorViewSizeChange(rtspReceiveView, 1.5, true);
     }
 
 
@@ -62,17 +71,28 @@ public class LiveStreamActivity extends Activity implements View.OnClickListener
                 overridePendingTransition(R.anim.fadein, R.anim.fadeout);
                 LiveStreamActivity.this.finish();
                 break;
+            case R.id.live_quit_btn:
+                mRtmpsender.broadcastStop();
+                startActivity(new Intent(LiveStreamActivity.this, MainMenuActivity.class)); //로딩이 끝난 후, ChoiceFunction 이동
+                overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+                LiveStreamActivity.this.finish();
+                break;
             case R.id.live_start_btn:
+                liveStartBtn.setVisibility(View.GONE);
+                liveStopBtn.setVisibility(View.VISIBLE);
                 StartYoutubeLive syLive = new StartYoutubeLive();
                 syLive.start();
                 break;
-
+            case R.id.live_stop_btn:
+                mRtmpsender.broadcastStop();
+                liveStartBtn.setVisibility(View.VISIBLE);
+                liveStopBtn.setVisibility(View.GONE);
+                break;
         }
-
     }
 
     public class StartYoutubeLive extends Thread {
-//        GoogleAccountCredential credential;
+        //        GoogleAccountCredential credential;
 //        HttpTransport transport = newCompatibleTransport();
 //        JsonFactory jsonFactory = new GsonFactory();
         @Override
@@ -80,7 +100,6 @@ public class LiveStreamActivity extends Activity implements View.OnClickListener
             YouTube youtube = new YouTube.Builder(transport, jsonFactory,
                     credential).setApplicationName(APP_NAME)
                     .build();
-//            mRtmpsender.broadcastStart(LiveStreamActivity.this, broadCastingUrl);
             mRtmpsender.broadcastStart2(LiveStreamActivity.this, broadCastingUrl);
             String broadcId = currentEvent.getId();
             /** start live event **/
@@ -98,6 +117,9 @@ public class LiveStreamActivity extends Activity implements View.OnClickListener
             new TextureView.SurfaceTextureListener() {
                 @Override
                 public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
+                    viewWidth = width;
+                    viewHeight = height;
+                    mRtspReceiver.createPlayer(LiveStreamActivity.this, url, rtspReceiveView, height, width);
                 }
 
                 @Override

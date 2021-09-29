@@ -86,11 +86,11 @@ public class RtspReceiver implements IVLCVout.Callback {
             RtspReceiver player = mOwner.get();
             switch (event.type) {
                 case MediaPlayer.Event.Buffering:
-                    loadingPercentage.setText((int)(event.getBuffering())+"%");
-                    if(event.getBuffering() > 99){
-                        video_load_complete = true;
-                        loadingLayout.setVisibility(View.GONE);
-                    }
+//                    loadingPercentage.setText((int)(event.getBuffering())+"%");
+//                    if(event.getBuffering() > 99){
+//                        video_load_complete = true;
+//                        loadingLayout.setVisibility(View.GONE);
+//                    }
                     break;
 
                 case MediaPlayer.Event.EndReached:
@@ -98,9 +98,9 @@ public class RtspReceiver implements IVLCVout.Callback {
                 case MediaPlayer.Event.Paused:
                     break;
                 case MediaPlayer.Event.Stopped:
-                    viewPager.setVisibility(View.GONE);
-                    tabLayout.setVisibility(View.GONE);
-                    reconnectLayout.setVisibility(View.VISIBLE);
+//                    viewPager.setVisibility(View.GONE);
+//                    tabLayout.setVisibility(View.GONE);
+//                    reconnectLayout.setVisibility(View.VISIBLE);
                     player.releasePlayer();
                     break;
                 default:

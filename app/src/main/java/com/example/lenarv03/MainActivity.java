@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     //rtsp receive variables
     public static MediaPlayer mMediaPlayer = null;
     RtspReceiver mRtspReceiver = new RtspReceiver();
-    static public String url = "rtsp://demo:demo@ipvmdemo.dyndns.org:5541/onvif-media/media.amp?profile=profile_1_h264&sessiontimeout=60&streamtype=unicast";
+    static public String url = "rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mov";
     //loading layout
     static public LinearLayout loadingLayout;
     static public TextView loadingPercentage;

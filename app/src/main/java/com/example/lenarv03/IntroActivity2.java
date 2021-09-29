@@ -15,7 +15,6 @@ import android.widget.TextView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.lenarv03.utils.WifiConnect;
-import com.github.ybq.android.spinkit.SpinKitView;
 
 import static com.example.lenarv03.utils.WifiConnect.LenarConnected;
 
@@ -23,7 +22,6 @@ public class IntroActivity2 extends Activity {
 
     ImageView checkSign;
     ConstraintLayout connectionFailLayout, connectingLayout, connectionSuccessLayout;
-    SpinKitView loadingSignal;
     Animation fadeinAnim;
     TextView reconnectBtn;
 
@@ -37,7 +35,6 @@ public class IntroActivity2 extends Activity {
 
         reconnectBtn = findViewById(R.id.reconnect_btn);
         checkSign = findViewById(R.id.checksign);
-        loadingSignal = findViewById(R.id.loading_signal);
         connectionFailLayout = findViewById(R.id.connection_fail_layout);
         connectingLayout = findViewById(R.id.connecting_layout);
         connectionSuccessLayout = findViewById(R.id.connection_success_layout);
